@@ -20,6 +20,7 @@ export const AuthButton = () => {
 			</SignedOut>
 			<SignedIn>
 				<UserButton />
+				{/* TODO: Add menu items for studio and user profile */}
 			</SignedIn>
 		</>
 	);
