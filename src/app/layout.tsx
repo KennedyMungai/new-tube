@@ -1,4 +1,5 @@
 import "@/app/globals.css";
+import { TRPCProvider } from "@/trpc/client";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -18,7 +19,9 @@ export default function RootLayout({
 	return (
 		<ClerkProvider afterSignOutUrl={"/"}>
 			<html lang="en">
-				<body className={`${inter.className} antialiased`}>{children}</body>
+				<body className={`${inter.className} antialiased`}>
+					<TRPCProvider>{children}</TRPCProvider>
+				</body>
 			</html>
 		</ClerkProvider>
 	);
