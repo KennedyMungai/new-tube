@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev --turbopack",
-		"dev:webhook": "ngrok http --url=prompt-noticeably-cod.ngrok-free.app 3000",
+		"dev:webhook": "ngrok http --domain=prompt-noticeably-cod.ngrok-free.app 3000",
 		"dev:all": "concurrently \"bun run dev:webhook\" \"bun run dev\"",
 		"build": "next build",
 		"start": "next start",
