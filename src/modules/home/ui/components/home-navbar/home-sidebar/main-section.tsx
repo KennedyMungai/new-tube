@@ -48,9 +48,10 @@ export const MainSection = () => {
 						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton
 								tooltip={item.title}
-								isActive={false}
+								isActive={false} // TODO: Change to look at current pathname
 								asChild
-								onClick={() => {}}>
+								onClick={() => {}} // TODO: Add click handler
+							>
 								<Link href={item.url} className="flex items-center gap-4">
 									<item.icon />
 									<span className="text-sm">{item.title}</span>
