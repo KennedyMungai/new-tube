@@ -36,7 +36,7 @@ const items: {
 		auth: true,
 	},
 	{
-		title: "All PLaylists",
+		title: "All Playlists",
 		url: "/playlists",
 		icon: ListVideoIcon,
 		auth: true,
