@@ -1,6 +1,6 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { AuthButton } from "@/modules/auth/ui/components/auth-button";
-import { SearchInput } from "@/modules/home/ui/components/home-navbar/search-input";
+import { SearchInput } from "@/modules/studio/ui/components/studio-navbar/search-input";
 import Image from "next/image";
 import Link from "next/link";
 
