@@ -1,5 +1,6 @@
 "use client";
 
+import { Separator } from "@/components/ui/separator";
 import {
 	Sidebar,
 	SidebarContent,
@@ -31,6 +32,7 @@ export const StudioSidebar = () => {
 								</Link>
 							</SidebarMenuButton>
 						</SidebarMenuItem>
+						<Separator />
 						<SidebarMenuItem>
 							<SidebarMenuButton tooltip={"Exit Studio"} asChild>
 								<Link href="/">
