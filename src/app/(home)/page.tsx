@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 const HomePage = async () => {
-	void trpc.hello.prefetch({ text: "chickens" });
+	void trpc.categories.getMany.prefetch();
 
 	return (
 		<HydrateClient>
