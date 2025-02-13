@@ -6,7 +6,7 @@ import { PlusIcon } from "lucide-react";
 export const StudioUploadModal = () => {
 	return (
 		<Button variant={"secondary"}>
-			<PlusIcon />
+			<PlusIcon className="mr-2" />
 			<span>Create</span>
 		</Button>
 	);
