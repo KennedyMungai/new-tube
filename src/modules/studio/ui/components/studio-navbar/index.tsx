@@ -24,6 +24,8 @@ export const StudioNavbar = () => {
 					<SearchInput />
 				</div>
 			</div>
+			{/* Spacer */}
+			<div className="flex-1" />
 			<div className="flex-shrink-0 items-center flex gap-4">
 				<AuthButton />
 			</div>
