@@ -11,13 +11,15 @@ type Props = {
 
 export const CategoriesSection = ({ categoryId }: Props) => {
 	return (
-		<Suspense fallback={<FilterCarousel isLoading onSelect={() => {}} data={[]} />}>
+		<Suspense fallback={<CategoriesSkeleton />}>
 			<ErrorBoundary fallback={<p>Error...</p>}>
 				<CategoriesSectionSuspense categoryId={categoryId} />
 			</ErrorBoundary>
 		</Suspense>
 	);
 };
+
+const CategoriesSkeleton = () => <FilterCarousel isLoading onSelect={() => {}} data={[]} />
 
 const CategoriesSectionSuspense = ({ categoryId }: Props) => {
 	const [categories] = trpc.categories.getMany.useSuspenseQuery();
