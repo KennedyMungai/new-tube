@@ -5,7 +5,7 @@ import { PersonalSection } from "@/modules/home/ui/components/home-navbar/home-s
 
 export const StudioSidebar = () => {
 	return (
-		<Sidebar className="pt-16 z-40 border-none" collapsible="icon">
+		<Sidebar className="pt-16 z-40" collapsible="icon">
 			<SidebarContent className="bg-background">
 				<MainSection />
 				<Separator />
