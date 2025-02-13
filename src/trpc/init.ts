@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { users } from "@/db/schema";
+import { rateLimit } from "@/lib/rateLimit";
 import { auth } from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
@@ -50,6 +51,15 @@ export const protectedProcedure = t.procedure.use(
 			throw new TRPCError({
 				code: "UNAUTHORIZED",
 				message: "User doesn't exist in the database",
+			});
+		}
+
+		const { success } = await rateLimit.limit(user.id);
+
+		if (!success) {
+			throw new TRPCError({
+				code: "TOO_MANY_REQUESTS",
+				message: "Rate limit exceeded",
 			});
 		}
 
