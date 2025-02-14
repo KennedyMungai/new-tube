@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 type Props = {
-	imageUrl?: string;
+	imageUrl?: string | null;
 };
 
 export const VideoThumbnail = ({ imageUrl }: Props) => {
