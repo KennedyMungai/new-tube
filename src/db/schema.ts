@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import {
+	integer,
 	pgTable,
 	text,
 	timestamp,
@@ -55,6 +56,7 @@ export const videos = pgTable("videos", {
 	muxTrackStatus: varchar("mux_track_status", { length: 255 }),
 	thumbnailUrl: varchar("thumbnail_url", { length: 255 }),
 	previewUrl: varchar("preview_url", { length: 255 }),
+	duration: integer("duration"),
 	userId: uuid("user_id")
 		.references(() => users.id, { onDelete: "cascade" })
 		.notNull(),
