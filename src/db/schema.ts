@@ -47,6 +47,12 @@ export const videos = pgTable("videos", {
 	id: uuid("id").defaultRandom().primaryKey(),
 	title: varchar("title", { length: 255 }).notNull(),
 	description: text("description"),
+	muxStatus: varchar("mux_status", { length: 255 }),
+	muxAssetId: varchar("mux_asset_id", { length: 511 }).unique(),
+	muxUploadId: varchar("mux_upload_id", { length: 511 }).unique(),
+	muxPlaybackId: varchar("mux_playback_id", { length: 511 }).unique(),
+	muxTrackId: varchar("mux_track_id", { length: 511 }).unique(),
+	muxTrackStatus: varchar("mux_track_status", { length: 255 }),
 	userId: uuid("user_id")
 		.references(() => users.id, { onDelete: "cascade" })
 		.notNull(),
