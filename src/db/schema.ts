@@ -53,6 +53,7 @@ export const videos = pgTable("videos", {
 	muxPlaybackId: varchar("mux_playback_id", { length: 511 }).unique(),
 	muxTrackId: varchar("mux_track_id", { length: 511 }).unique(),
 	muxTrackStatus: varchar("mux_track_status", { length: 255 }),
+	thumbnailUrl: varchar("thumbnail_url", { length: 255 }),
 	userId: uuid("user_id")
 		.references(() => users.id, { onDelete: "cascade" })
 		.notNull(),
