@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
-import { PlusIcon } from "lucide-react";
+import { Loader2Icon, PlusIcon } from "lucide-react";
 
 export const StudioUploadModal = () => {
 	const utils = trpc.useUtils();
@@ -17,7 +17,11 @@ export const StudioUploadModal = () => {
 			variant={"secondary"}
 			onClick={() => create.mutate()}
 			disabled={create.isPending}>
-			<PlusIcon className="mr-2" />
+			{create.isPending ? (
+				<Loader2Icon className="size-5 animate-spin text-muted-foreground" />
+			) : (
+				<PlusIcon className="mr-2" />
+			)}
 			<span>Create</span>
 		</Button>
 	);
