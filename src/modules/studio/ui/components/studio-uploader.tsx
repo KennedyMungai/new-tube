@@ -13,7 +13,7 @@ type Props = {
 export const StudioUploader = ({ onSuccess, endpoint }: Props) => {
 	return (
 		<div>
-			<MuxUploader />
+			<MuxUploader endpoint={endpoint} />
 		</div>
 	);
 };
