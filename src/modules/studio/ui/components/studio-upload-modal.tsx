@@ -13,7 +13,10 @@ export const StudioUploadModal = () => {
 	});
 
 	return (
-		<Button variant={"secondary"} onClick={() => create.mutate()}>
+		<Button
+			variant={"secondary"}
+			onClick={() => create.mutate()}
+			disabled={create.isPending}>
 			<PlusIcon className="mr-2" />
 			<span>Create</span>
 		</Button>
