@@ -34,6 +34,7 @@ const VideosSectionSuspense = () => {
 		<div>
 			{JSON.stringify(data)}
 			<InfiniteScroll
+				isManual
 				hasNextPage={query.hasNextPage}
 				isFetchingNextPage={query.isFetchingNextPage}
 				fetchNextPage={query.fetchNextPage}
