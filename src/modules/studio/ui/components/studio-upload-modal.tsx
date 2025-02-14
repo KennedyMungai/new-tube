@@ -5,7 +5,12 @@ import { trpc } from "@/trpc/client";
 import { PlusIcon } from "lucide-react";
 
 export const StudioUploadModal = () => {
-	const create = trpc.videos.create.useMutation();
+	const utils = trpc.useUtils();
+	const create = trpc.videos.create.useMutation({
+		onSuccess: () => {
+			utils.studio.getMany.invalidate();
+		},
+	});
 
 	return (
 		<Button variant={"secondary"} onClick={() => create.mutate()}>
