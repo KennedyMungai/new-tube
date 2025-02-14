@@ -20,6 +20,7 @@ export const StudioUploader = ({ onSuccess, endpoint }: Props) => {
 			<MuxUploader
 				endpoint={endpoint}
 				id={UPLOADER_ID}
+				onSuccess={onSuccess}
 				className="hidden group/uploader"
 			/>
 			<MuxUploaderDrop muxUploader={UPLOADER_ID} className="group/drop">
