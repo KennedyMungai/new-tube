@@ -13,13 +13,13 @@ export const VideoThumbnail = ({ imageUrl, previewUrl, title }: Props) => {
 			<div className="relative w-full overflow-hidden rounded-xl aspect-video">
 				<Image
 					src={imageUrl ?? "/placeholder.svg"}
-					alt="Thumbnail"
+					alt={title}
 					fill
 					className="size-full object-cover group-hover:opacity-0 transition-opacity duration-300 opacity-100"
 				/>
 				<Image
 					src={previewUrl ?? "/placeholder.svg"}
-					alt="Thumbnail"
+					alt={title}
 					fill
 					className="size-full object-cover group-hover:opacity-100 transition-opacity duration-300 opacity-0"
 				/>
