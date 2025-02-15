@@ -10,6 +10,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { DEFAULT_LIMIT } from "@/constants";
+import { snakeCaseToTitle } from "@/lib/utils";
 import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
 import { trpc } from "@/trpc/client";
 import Link from "next/link";
@@ -75,10 +76,22 @@ const VideosSectionSuspense = () => {
 														duration={video.duration ?? 0}
 													/>
 												</div>
+												<div className="flex flex-col overflow-hidden gap-y-1">
+													<span className="text-sm line-clamp-1">
+														{video.title}
+													</span>
+													<span className="text-xs text-muted-foreground line-clamp-1">
+														{video.description ?? "No description"}
+													</span>
+												</div>
 											</div>
 										</TableCell>
 										<TableCell>Visibility</TableCell>
-										<TableCell>Status</TableCell>
+										<TableCell>
+											<div className="flex items-center">
+												{snakeCaseToTitle(video.muxStatus ?? "error")}
+											</div>
+										</TableCell>
 										<TableCell>Date</TableCell>
 										<TableCell>Views</TableCell>
 										<TableCell>Comments</TableCell>
