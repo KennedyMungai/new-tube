@@ -79,7 +79,7 @@ const VideosSectionSkeleton = () => {
 								<TableCell className="text-right">
 									<Skeleton className="h-4 w-12 ml-auto" />
 								</TableCell>
-								<TableCell className="text-right">
+								<TableCell className="text-right pr-6">
 									<Skeleton className="h-4 w-12 ml-auto" />
 								</TableCell>
 							</TableRow>
