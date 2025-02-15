@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { videos } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { TRPCError } from "@trpc/server";
 import { and, desc, eq, lt, or } from "drizzle-orm";
 import { z } from "zod";
 
@@ -15,6 +16,9 @@ export const studioRouter = createTRPCRouter({
 				.select()
 				.from(videos)
 				.where(and(eq(videos.userId, userId), eq(videos.id, id)));
+
+			if (!video)
+				throw new TRPCError({ code: "NOT_FOUND", message: "Video not found" });
 
 			return video;
 		}),
