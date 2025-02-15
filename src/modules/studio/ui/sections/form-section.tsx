@@ -51,6 +51,8 @@ const FormSectionSkeleton = () => <div>Loading...</div>;
 
 const FormSectionSuspense = ({ videoId }: Props) => {
 	const [video] = trpc.studio.getOne.useSuspenseQuery({ id: videoId });
+	// HACK: Ideally, the select part of the form should be on its own component to avoid long loading times
+	const [categories] = trpc.categories.getMany.useSuspenseQuery();
 
 	const form = useForm<z.infer<typeof videoUpdateSchema>>({
 		resolver: zodResolver(videoUpdateSchema),
@@ -142,9 +144,11 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 											</SelectTrigger>
 										</FormControl>
 										<SelectContent>
-											<SelectItem value="placeholder_value">
-												Something
-											</SelectItem>
+											{categories.map((category) => (
+												<SelectItem key={category.id} value={category.id}>
+													{category.name}
+												</SelectItem>
+											))}
 										</SelectContent>
 									</Select>
 									<FormMessage />
