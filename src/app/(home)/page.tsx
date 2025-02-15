@@ -10,7 +10,7 @@ type Props = {
 const HomePage = async ({ searchParams }: Props) => {
 	const { categoryId } = await searchParams;
 
-	void trpc.categories.getMany.prefetch();
+	void trpc.categories.getMany.prefetchInfinite();
 
 	return (
 		<HydrateClient>
