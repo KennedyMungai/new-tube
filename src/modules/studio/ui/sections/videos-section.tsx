@@ -95,6 +95,7 @@ const VideosSectionSuspense = () => {
 												) : (
 													<Globe2Icon className="size-4 mr-2" />
 												)}
+												<span>{snakeCaseToTitle(video.visibility)}</span>
 											</div>
 										</TableCell>
 										<TableCell>
