@@ -139,6 +139,7 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 							<FormField
 								control={form.control}
 								name="categoryId"
+								disabled={categories.length === 0}
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Category</FormLabel>
