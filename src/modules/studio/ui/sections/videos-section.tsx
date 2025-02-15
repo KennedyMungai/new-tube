@@ -14,6 +14,7 @@ import { snakeCaseToTitle } from "@/lib/utils";
 import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
 import { trpc } from "@/trpc/client";
 import { format } from "date-fns";
+import { Globe2Icon, LockIcon } from "lucide-react";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -87,8 +88,14 @@ const VideosSectionSuspense = () => {
 												</div>
 											</div>
 										</TableCell>
-										<TableCell className="capitalize">
-											{video.visibility}
+										<TableCell>
+											<div className="flex items-center">
+												{video.visibility === "private" ? (
+													<LockIcon className="size-4 mr-2" />
+												) : (
+													<Globe2Icon className="size-4 mr-2" />
+												)}
+											</div>
 										</TableCell>
 										<TableCell>
 											<div className="flex items-center">
