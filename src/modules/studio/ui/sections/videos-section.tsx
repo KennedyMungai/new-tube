@@ -124,7 +124,7 @@ const VideosSectionSuspense = () => {
 									key={video.id}
 									legacyBehavior>
 									<TableRow className="cursor-pointer">
-										<TableCell>
+										<TableCell className="pl-6">
 											<div className="flex items-center gap-4">
 												<div className="relative aspect-video w-36 shrink-0">
 													<VideoThumbnail
