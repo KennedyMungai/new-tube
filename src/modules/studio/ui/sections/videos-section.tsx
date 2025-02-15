@@ -13,6 +13,7 @@ import { DEFAULT_LIMIT } from "@/constants";
 import { snakeCaseToTitle } from "@/lib/utils";
 import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
 import { trpc } from "@/trpc/client";
+import { format } from "date-fns";
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -92,7 +93,9 @@ const VideosSectionSuspense = () => {
 												{snakeCaseToTitle(video.muxStatus ?? "error")}
 											</div>
 										</TableCell>
-										<TableCell>Date</TableCell>
+										<TableCell>
+											{format(new Date(video.createdAt), "d MMM yyyy")}
+										</TableCell>
 										<TableCell>Views</TableCell>
 										<TableCell>Comments</TableCell>
 										<TableCell>Likes</TableCell>
