@@ -93,7 +93,7 @@ const VideosSectionSuspense = () => {
 												{snakeCaseToTitle(video.muxStatus ?? "error")}
 											</div>
 										</TableCell>
-										<TableCell>
+										<TableCell className="text-sm truncate">
 											{format(new Date(video.createdAt), "d MMM yyyy")}
 										</TableCell>
 										<TableCell>Views</TableCell>
