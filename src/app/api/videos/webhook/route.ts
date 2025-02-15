@@ -70,21 +70,34 @@ export const POST = async (request: Request) => {
 			const thumbnailUrl = `https://image.mux.com/${playbackId}/thumbnail.jpg`;
 			const previewUrl = `https://image.mux.com/${playbackId}/animated.gif`;
 
-            const duration = data.duration
-							? Math.round(data.duration * 1000)
-							: 0;
+			const duration = data.duration ? Math.round(data.duration * 1000) : 0;
 
-						await db
-							.update(videos)
-							.set({
-								thumbnailUrl,
-								muxStatus: data.status,
-								muxPlaybackId: playbackId,
-								muxAssetId: data.id,
-								previewUrl,
-								duration,
-							})
-							.where(eq(videos.muxUploadId, data.upload_id));
+			await db
+				.update(videos)
+				.set({
+					thumbnailUrl,
+					muxStatus: data.status,
+					muxPlaybackId: playbackId,
+					muxAssetId: data.id,
+					previewUrl,
+					duration,
+				})
+				.where(eq(videos.muxUploadId, data.upload_id));
+
+			break;
+		}
+
+		case "video.asset.errored": {
+			const data = payload.data as VideoAssetErroredWebhookEvent["data"];
+
+			if (!data.upload_id) {
+				return new Response("No upload ID found", { status: 400 });
+			}
+
+			await db
+				.update(videos)
+				.set({ muxStatus: data.status })
+				.where(eq(videos.muxUploadId, data.upload_id));
 
 			break;
 		}
