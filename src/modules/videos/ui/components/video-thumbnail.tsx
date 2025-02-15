@@ -4,7 +4,7 @@ type Props = {
 	imageUrl?: string | null;
 	previewUrl?: string | null;
 	title: string;
-	duration: number | null;
+	duration: number;
 };
 
 export const VideoThumbnail = ({
