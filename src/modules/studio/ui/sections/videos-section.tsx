@@ -166,7 +166,9 @@ const VideosSectionSuspense = () => {
 										<TableCell className="text-right text-sm">
 											Comments
 										</TableCell>
-										<TableCell className="text-right text-sm">Likes</TableCell>
+										<TableCell className="text-right text-sm pr-6">
+											Likes
+										</TableCell>
 									</TableRow>
 								</Link>
 							))}
