@@ -1,5 +1,5 @@
 import { VideoGetOneOutput } from "@/modules/videos/types";
-import { VideoOwner } from "@/modules/videos/ui/components/VideoOwner";
+import { VideoOwner } from "@/modules/videos/ui/components/video-owner";
 
 type Props = {
 	video: VideoGetOneOutput;
