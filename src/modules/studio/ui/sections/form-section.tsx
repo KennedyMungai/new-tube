@@ -228,7 +228,9 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 										<p className="text-muted-foreground text-xs">
 											Video Status
 										</p>
-										<p>{snakeCaseToTitle(video.muxStatus ?? "Preparing")}</p>
+										<p className="text-sm">
+											{snakeCaseToTitle(video.muxStatus ?? "Preparing")}
+										</p>
 									</div>
 								</div>
 							</div>
