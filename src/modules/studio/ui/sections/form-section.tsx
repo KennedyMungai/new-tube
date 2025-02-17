@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { videoUpdateSchema } from "@/db/schema";
+import { snakeCaseToTitle } from "@/lib/utils";
 import { VideoPlayer } from "@/modules/videos/ui/components/video-player";
 import { trpc } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -220,6 +221,14 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 												{isCopied ? <CopyCheckIcon /> : <CopyIcon />}
 											</Button>
 										</div>
+									</div>
+								</div>
+								<div className="flex justify-between items-center">
+									<div className="flex flex-col gap-y-1">
+										<p className="text-muted-foreground text-xs">
+											Video Status
+										</p>
+										<p>{snakeCaseToTitle(video.muxStatus)}</p>
 									</div>
 								</div>
 							</div>
