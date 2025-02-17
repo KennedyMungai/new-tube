@@ -3,12 +3,25 @@ import { VideoDescription } from "@/modules/videos/ui/components/video-descripti
 import { VideoMenu } from "@/modules/videos/ui/components/video-menu";
 import { VideoOwner } from "@/modules/videos/ui/components/video-owner";
 import { VideoReactions } from "@/modules/videos/ui/components/video-reactions";
+import { useMemo } from "react";
 
 type Props = {
 	video: VideoGetOneOutput;
 };
 
 export const VideoTopRow = ({ video }: Props) => {
+	const compactViews = useMemo(() => {
+		return Intl.NumberFormat("en-US", {
+			notation: "compact",
+		}).format(1523);
+	}, []);
+
+	const expandedViews = useMemo(() => {
+		return Intl.NumberFormat("en-US", {
+			notation: "standard",
+		}).format(1523);
+	}, []);
+
 	return (
 		<div className="flex flex-col gap-4 mt-4">
 			<h1 className="text-xl font-semibold">{video.title}</h1>
@@ -21,8 +34,8 @@ export const VideoTopRow = ({ video }: Props) => {
 			</div>
 			<VideoDescription
 				description={video.description}
-				compactViews="1.5k"
-				expandedViews="1,523"
+				compactViews={compactViews}
+				expandedViews={expandedViews}
 				compactDate={"12/12/25"}
 				expandedDate={"12th January 2025"}
 			/>
