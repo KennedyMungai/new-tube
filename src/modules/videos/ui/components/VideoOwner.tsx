@@ -20,11 +20,13 @@ export const VideoOwner = ({ user, videoId }: Props) => {
 			<Link href={`/users/${user.id}`}>
 				<div className="flex items-center gap-3 min-w-0">
 					<UserAvatar imageUrl={user.imageUrl} name={user.name} size="lg" />
-					<UserInfo size={"lg"} name={user.name} />
-					<span className="text-sm text-muted-foreground line-clamp-1">
-						{/* TODO: Properly fill in the subscribers */}
-						{0} Subscribers
-					</span>
+					<div className="flex flex-col gap-1 min-w-0">
+						<UserInfo size={"lg"} name={user.name} />
+						<span className="text-sm text-muted-foreground line-clamp-1">
+							{/* TODO: Properly fill in the subscribers */}
+							{0} Subscribers
+						</span>
+					</div>
 				</div>
 			</Link>
 			{userId === user.clerkId ? (
