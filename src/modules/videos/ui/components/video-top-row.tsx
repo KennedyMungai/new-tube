@@ -3,8 +3,8 @@ import { VideoDescription } from "@/modules/videos/ui/components/video-descripti
 import { VideoMenu } from "@/modules/videos/ui/components/video-menu";
 import { VideoOwner } from "@/modules/videos/ui/components/video-owner";
 import { VideoReactions } from "@/modules/videos/ui/components/video-reactions";
-import { useMemo } from "react";
 import { format, formatDistanceToNow } from "date-fns";
+import { useMemo } from "react";
 
 type Props = {
 	video: VideoGetOneOutput;
