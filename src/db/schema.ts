@@ -66,7 +66,9 @@ export const videos = pgTable("videos", {
 	muxTrackId: varchar("mux_track_id", { length: 511 }).unique(),
 	muxTrackStatus: varchar("mux_track_status", { length: 255 }),
 	thumbnailUrl: varchar("thumbnail_url", { length: 255 }),
+	thumbnailKey: varchar("thumbnail_key", { length: 511 }),
 	previewUrl: varchar("preview_url", { length: 255 }),
+	previewKey: varchar("preview_key", { length: 511 }),
 	duration: integer("duration").default(0).notNull(),
 	visibility: videoVisibility("visibility").default("private").notNull(),
 	userId: uuid("user_id")
