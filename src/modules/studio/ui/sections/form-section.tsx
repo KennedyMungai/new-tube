@@ -38,6 +38,7 @@ import {
 	TrashIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useForm } from "react-hook-form";
@@ -61,6 +62,8 @@ export const FormSection = ({ videoId }: Props) => {
 const FormSectionSkeleton = () => <div>Loading...</div>;
 
 const FormSectionSuspense = ({ videoId }: Props) => {
+	const router = useRouter();
+
 	const utils = trpc.useUtils();
 
 	const [video] = trpc.studio.getOne.useSuspenseQuery({ id: videoId });
@@ -75,6 +78,17 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 			utils.studio.getMany.invalidate();
 
 			toast.success("Video updated successfully");
+		},
+		onError: (error) => toast.error(error.message),
+	});
+
+	const remove = trpc.videos.remove.useMutation({
+		onSuccess: () => {
+			utils.studio.getMany.invalidate();
+
+			toast.success("Video deleted successfully");
+
+			router.push("/studio");
 		},
 		onError: (error) => toast.error(error.message),
 	});
@@ -127,7 +141,8 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="end">
-								<DropdownMenuItem>
+								<DropdownMenuItem
+									onClick={() => remove.mutate({ id: videoId })}>
 									<TrashIcon className="size-4 mr-2" />
 									<span>Delete</span>
 								</DropdownMenuItem>
