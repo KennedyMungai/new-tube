@@ -13,12 +13,12 @@ export const VideoPlayer = ({
 	autoPlay,
 	onPlay,
 }: Props) => {
-	if (!playbackId) return null;
+	// if (!playbackId) return null;
 
 	return (
 		<div className="relative">
 			<MuxPlayer
-				playbackId={playbackId}
+				playbackId={playbackId ?? ""}
 				poster={thumbnailUrl ?? "/placeholder.svg"}
 				playerInitTime={0}
 				autoPlay={autoPlay}
