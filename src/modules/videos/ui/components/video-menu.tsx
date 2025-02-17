@@ -1,3 +1,47 @@
-export const VideoMenu = () => {
-	return <div>Video Menu</div>;
+import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+	ListPlusIcon,
+	MoreVerticalIcon,
+	ShareIcon,
+	Trash2Icon,
+} from "lucide-react";
+
+type Props = {
+	videoId: string;
+	variant?: "ghost" | "secondary";
+	onRemove?: () => void;
+};
+
+export const VideoMenu = ({ videoId, onRemove, variant = "ghost" }: Props) => {
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<Button variant={variant} size="icon" className="rounded-full">
+					<MoreVerticalIcon className="size-5" />
+				</Button>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
+				<DropdownMenuItem onClick={() => {}}>
+					<ShareIcon className="mr-2 size-4" />
+					Share
+				</DropdownMenuItem>
+				<DropdownMenuItem onClick={() => {}}>
+					<ListPlusIcon className="mr-2 size-4" />
+					Add to playlist
+				</DropdownMenuItem>
+				{onRemove && (
+					<DropdownMenuItem onClick={() => {}}>
+						<Trash2Icon className="mr-2 size-4" />
+						Remove
+					</DropdownMenuItem>
+				)}
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
 };
