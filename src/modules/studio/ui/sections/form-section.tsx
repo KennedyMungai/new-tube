@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { videoUpdateSchema } from "@/db/schema";
+import { VideoPlayer } from "@/modules/videos/ui/components/video-player";
 import { trpc } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MoreVerticalIcon, TrashIcon } from "lucide-react";
@@ -171,6 +172,16 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 								</FormItem>
 							)}
 						/>
+					</div>
+					<div className="flex flex-col gap-y-8 lg:col-span-2">
+						<div className="flex flex-col gap-4 bg-[#F9F9F9] rounded-xl overflow-hidden h-fit">
+							<div className="aspect-video overflow-hidden relative">
+								<VideoPlayer
+									playbackId={video.muxPlaybackId}
+									thumbnailUrl={video.thumbnailUrl}
+								/>
+							</div>
+						</div>
 					</div>
 				</div>
 			</form>
