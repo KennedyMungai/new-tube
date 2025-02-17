@@ -28,7 +28,7 @@ export const VideoTopRow = ({ video }: Props) => {
 	}, [video.createdAt]);
 
 	const expandedDate = useMemo(() => {
-		return format(video.createdAt, "do MMMM yyyy");
+		return format(video.createdAt, "do MMM yyyy");
 	}, [video.createdAt]);
 
 	return (
