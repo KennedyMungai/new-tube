@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { VideoBanner } from "@/modules/videos/ui/components/video-banner";
 import { VideoPlayer } from "@/modules/videos/ui/components/video-player";
+import { VideoTopRow } from "@/modules/videos/ui/components/VideoTopRow";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -39,6 +40,7 @@ const VideoSectionSuspense = ({ videoId }: Props) => {
 				/>
 			</div>
 			<VideoBanner status={video.muxStatus} />
+			<VideoTopRow video={video} />
 		</>
 	);
 };
