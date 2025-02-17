@@ -199,28 +199,26 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 									playbackId={video.muxPlaybackId}
 									thumbnailUrl={video.thumbnailUrl}
 								/>
-								<div className="p-4 flex flex-col gap-y-6">
-									<div className="flex justify-between items-center gap-y-2">
-										<div className="flex flex-col gap-y-1">
-											<p className="text-xs text-muted-foreground">
-												Video Link
-											</p>
-											<div className="flex items-center gap-x-2">
-												<Link href={`/videos/${video.id}`}>
-													<p className="line-clamp-1 text-sm text-blue-500">
-														{fullUrl}
-													</p>
-												</Link>
-												<Button
-													size="icon"
-													type="button"
-													variant={"ghost"}
-													onClick={onCopy}
-													disabled={isCopied}
-													className="shrink-0">
-													{isCopied ? <CopyCheckIcon /> : <CopyIcon />}
-												</Button>
-											</div>
+							</div>
+							<div className="p-4 flex flex-col gap-y-6">
+								<div className="flex justify-between items-center gap-y-2">
+									<div className="flex flex-col gap-y-1">
+										<p className="text-xs text-muted-foreground">Video Link</p>
+										<div className="flex items-center gap-x-2">
+											<Link href={`/videos/${video.id}`}>
+												<p className="line-clamp-1 text-sm text-blue-500">
+													{fullUrl}
+												</p>
+											</Link>
+											<Button
+												size="icon"
+												type="button"
+												variant={"ghost"}
+												onClick={onCopy}
+												disabled={isCopied}
+												className="shrink-0">
+												{isCopied ? <CopyCheckIcon /> : <CopyIcon />}
+											</Button>
 										</div>
 									</div>
 								</div>
