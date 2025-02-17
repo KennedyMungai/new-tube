@@ -16,15 +16,17 @@ export const VideoPlayer = ({
 	if (!playbackId) return null;
 
 	return (
-		<MuxPlayer
-			playbackId={playbackId}
-			poster={thumbnailUrl ?? "/placeholder.svg"}
-			playerInitTime={0}
-			autoPlay={autoPlay}
-			thumbnailTime={0}
-			accentColor="#FF2056"
-			onPlay={onPlay}
-			className="size-full object-contain"
-		/>
+		<div className="relative">
+			<MuxPlayer
+				playbackId={playbackId}
+				poster={thumbnailUrl ?? "/placeholder.svg"}
+				playerInitTime={0}
+				autoPlay={autoPlay}
+				thumbnailTime={0}
+				accentColor="#FF2056"
+				onPlay={onPlay}
+				className="size-full object-contain"
+			/>
+		</div>
 	);
 };
