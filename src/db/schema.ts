@@ -34,6 +34,8 @@ export const userRelations = relations(users, ({ many }) => ({
 	videos: many(videos),
 }));
 
+export const usersSelectSchema = createSelectSchema(users);
+
 export const categories = pgTable(
 	"categories",
 	{
