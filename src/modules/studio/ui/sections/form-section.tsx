@@ -120,7 +120,7 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 	const onSubmit = async (data: z.infer<typeof videoUpdateSchema>) =>
 		await update.mutateAsync(data);
 
-	const fullUrl = `${process.env.NEXT_PUBLIC_APP_URL}/video/${videoId}`;
+	const fullUrl = `${process.env.VERCEL_URL ?? "http://localhost:3000"}/video/${videoId}`;
 
 	const onCopy = async () => {
 		await navigator.clipboard.writeText(fullUrl);
