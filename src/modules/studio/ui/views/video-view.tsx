@@ -6,7 +6,7 @@ type Props = {
 
 export const VideoView = ({ videoId }: Props) => {
 	return (
-		<div className="px-4 pt-2.5 max-w-screen-lg">
+		<div className="px-4 pt-2.5 max-w-screen-lg pb-6">
 			<FormSection videoId={videoId} />
 		</div>
 	);
