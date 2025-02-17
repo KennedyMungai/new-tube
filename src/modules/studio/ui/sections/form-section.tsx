@@ -221,7 +221,8 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 														</Button>
 													</DropdownMenuTrigger>
 													<DropdownMenuContent align="start" side="right">
-														<DropdownMenuItem>
+														<DropdownMenuItem
+															onClick={() => setThumbnailModalOpen(true)}>
 															<ImagePlusIcon className="size-5 mr-1 " />
 															Change
 														</DropdownMenuItem>
