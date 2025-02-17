@@ -108,8 +108,6 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 			utils.studio.getOne.invalidate({ id: videoId });
 
 			toast.success("Thumbnail restored successfully");
-
-			router.push("/studio");
 		},
 		onError: (error) => toast.error(error.message),
 	});
