@@ -18,7 +18,6 @@
 		"@clerk/nextjs": "^6.11.2",
 		"@hookform/resolvers": "^4.0.0",
 		"@mux/mux-node": "^9.0.1",
-		"@mux/mux-player": "^3.3.0",
 		"@mux/mux-player-react": "^3.3.0",
 		"@mux/mux-uploader-react": "^1.1.2",
 		"@neondatabase/serverless": "^0.10.4",
