@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
 				protocol: "https",
 				hostname: "seal.ingest.uploadthing.com",
 			},
+			{
+				protocol: "https",
+				hostname: "6bkwru486v.ufs.sh",
+			},
 		],
 	},
 };
