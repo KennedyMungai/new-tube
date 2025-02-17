@@ -37,7 +37,7 @@ export const ourFileRouter = {
 		.onUploadComplete(async ({ metadata, file }) => {
 			await db
 				.update(videos)
-				.set({ thumbnailUrl: file.ufsUrl })
+				.set({ thumbnailUrl: file.ufsUrl, thumbnailKey: file.key })
 				.where(
 					and(
 						eq(videos.id, metadata.videoId),
