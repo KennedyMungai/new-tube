@@ -4,6 +4,7 @@ import { VideoMenu } from "@/modules/videos/ui/components/video-menu";
 import { VideoOwner } from "@/modules/videos/ui/components/video-owner";
 import { VideoReactions } from "@/modules/videos/ui/components/video-reactions";
 import { useMemo } from "react";
+import { format, formatDistanceToNow } from "date-fns";
 
 type Props = {
 	video: VideoGetOneOutput;
@@ -22,6 +23,14 @@ export const VideoTopRow = ({ video }: Props) => {
 		}).format(1523);
 	}, []);
 
+	const compactDate = useMemo(() => {
+		return formatDistanceToNow(video.createdAt, { addSuffix: true });
+	}, [video.createdAt]);
+
+	const expandedDate = useMemo(() => {
+		return format(video.createdAt, "do MMMM yyyy");
+	}, [video.createdAt]);
+
 	return (
 		<div className="flex flex-col gap-4 mt-4">
 			<h1 className="text-xl font-semibold">{video.title}</h1>
@@ -36,8 +45,8 @@ export const VideoTopRow = ({ video }: Props) => {
 				description={video.description}
 				compactViews={compactViews}
 				expandedViews={expandedViews}
-				compactDate={"12/12/25"}
-				expandedDate={"12th January 2025"}
+				compactDate={compactDate}
+				expandedDate={expandedDate}
 			/>
 		</div>
 	);
