@@ -11,6 +11,7 @@ import {
 	ShareIcon,
 	Trash2Icon,
 } from "lucide-react";
+import { toast } from "sonner";
 
 type Props = {
 	videoId: string;
@@ -18,7 +19,14 @@ type Props = {
 	onRemove?: () => void;
 };
 
+// TODO: Implement the remaining functionality
 export const VideoMenu = ({ videoId, onRemove, variant = "ghost" }: Props) => {
+	const onShare = () => {
+		const fullUrl = `${process.env.VERCEL_URL ?? "http://localhost:3000"}/videos/${videoId}`;
+		navigator.clipboard.writeText(fullUrl);
+		toast.success("Link copied to the clipboard");
+	};
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -27,7 +35,7 @@ export const VideoMenu = ({ videoId, onRemove, variant = "ghost" }: Props) => {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-				<DropdownMenuItem onClick={() => {}}>
+				<DropdownMenuItem onClick={onShare}>
 					<ShareIcon className="mr-2 size-4" />
 					Share
 				</DropdownMenuItem>
