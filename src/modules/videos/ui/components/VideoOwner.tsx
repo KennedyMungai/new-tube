@@ -1,5 +1,8 @@
+import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/user-avatar";
 import { usersSelectSchema } from "@/db/schema";
+import { SubscriptionButton } from "@/modules/subscriptions/ui/components/subscription-button";
+import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { z } from "zod";
 
@@ -9,6 +12,8 @@ type Props = {
 };
 
 export const VideoOwner = ({ user, videoId }: Props) => {
+	const { userId } = useAuth();
+
 	return (
 		<div className="flex items-center sm:items-start justify-between sm:justify-start gap-3 min-w-0">
 			<Link href={`/users/${user.id}`}>
@@ -20,6 +25,19 @@ export const VideoOwner = ({ user, videoId }: Props) => {
 					</span>
 				</div>
 			</Link>
+			{userId === user.clerkId ? (
+				<Button className="rounded-full" asChild variant={"secondary"}>
+					<Link href={`/studio/videos/${videoId}`}>Edit Video</Link>
+				</Button>
+			) : (
+				<SubscriptionButton
+					onClick={() => {}}
+					disabled={false}
+					isSubscribed={false}
+					size="default"
+					className="flex-none"
+				/>
+			)}
 		</div>
 	);
 };
