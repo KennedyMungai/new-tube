@@ -13,14 +13,36 @@ import {
 	protectedProcedure,
 } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { and, eq, getTableColumns } from "drizzle-orm";
+import { and, eq, getTableColumns, inArray } from "drizzle-orm";
 import { UTApi } from "uploadthing/server";
 import { z } from "zod";
 
 export const videosRouter = createTRPCRouter({
 	getOne: baseProcedure
 		.input(z.object({ id: z.string().uuid() }))
-		.query(async ({ input }) => {
+		.query(async ({ input, ctx }) => {
+			const { clerkUserId } = ctx;
+
+			let userId;
+
+			const [user] = await db
+				.select()
+				.from(users)
+				.where(inArray(users.clerkId, clerkUserId ? [clerkUserId] : []));
+
+			if (user) userId = user.id;
+
+			// Common Table Expressions
+			const viewerReactions = db.$with("viewerReactions").as(
+				db
+					.select({
+						videoId: videoReactions.videoId,
+						type: videoReactions.type,
+					})
+					.from(videoReactions)
+					.where(inArray(videoReactions.userId, userId ? [userId] : [])),
+			);
+
 			const [existingVideo] = await db
 				.select({
 					...getTableColumns(videos),
@@ -42,9 +64,11 @@ export const videosRouter = createTRPCRouter({
 							eq(videoReactions.type, "dislike"),
 						),
 					),
+					viewerReaction: viewerReactions.type,
 				})
 				.from(videos)
 				.innerJoin(users, eq(videos.userId, users.id))
+				.leftJoin(viewerReactions, eq(videos.id, viewerReactions.videoId))
 				.where(eq(videos.id, input.id));
 
 			if (!existingVideo) throw new TRPCError({ code: "NOT_FOUND" });
