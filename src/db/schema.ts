@@ -227,7 +227,7 @@ export const comments = pgTable("comments", {
 		.notNull(),
 	value: text("value").notNull(),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
-	updateAt: timestamp("updated_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
 export const commentsRelations = relations(comments, ({ one }) => ({
