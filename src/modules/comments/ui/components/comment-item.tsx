@@ -1,7 +1,7 @@
-import { CommentGetOneOutput } from "@/modules/comments/types";
+import { CommentGetManyOutput } from "@/modules/comments/types";
 
 type Props = {
-	comment: CommentGetOneOutput;
+	comment: CommentGetManyOutput;
 };
 
 export const CommentItem = ({}: Props) => {
