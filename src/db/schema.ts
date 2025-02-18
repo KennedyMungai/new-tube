@@ -173,3 +173,27 @@ export const videoReactionsRelations = relations(videoReactions, ({ one }) => ({
 export const videoReactionsSelectSchema = createSelectSchema(videoReactions);
 export const videoReactionsInsertSchema = createInsertSchema(videoReactions);
 export const videoReactionsUpdateSchema = createUpdateSchema(videoReactions);
+
+export const subscriptions = pgTable(
+	"subscriptions",
+	{
+		viewerId: uuid("viewer_id")
+			.references(() => users.id, {
+				onDelete: "cascade",
+			})
+			.notNull(),
+		creatorId: uuid("creator_id")
+			.references(() => users.id, {
+				onDelete: "cascade",
+			})
+			.notNull(),
+		createdAt: timestamp("created_at").defaultNow().notNull(),
+		updatedAt: timestamp("updated_at").defaultNow().notNull(),
+	},
+	(t) => [
+		primaryKey({
+			name: "pk_subscriptions",
+			columns: [t.viewerId, t.creatorId],
+		}),
+	],
+);
