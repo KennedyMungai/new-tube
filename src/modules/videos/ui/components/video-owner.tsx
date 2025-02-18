@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const VideoOwner = ({ user, videoId }: Props) => {
-	const { userId } = useAuth();
+	const { userId, isLoaded } = useAuth();
 
 	const { isPending, onClick } = useSubscription({
 		isSubscribed: user.viewerSubscribed,
@@ -42,7 +42,7 @@ export const VideoOwner = ({ user, videoId }: Props) => {
 			) : (
 				<SubscriptionButton
 					onClick={onClick}
-					disabled={isPending}
+					disabled={isPending || !isLoaded}
 					isSubscribed={user.viewerSubscribed}
 					size="default"
 					className="flex-none"
