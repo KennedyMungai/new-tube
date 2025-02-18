@@ -35,6 +35,10 @@ export const userRelations = relations(users, ({ many }) => ({
 	videos: many(videos),
 	videoView: many(videoViews),
 	videoReaction: many(videoReactions),
+	subscriptions: many(subscriptions, {
+		relationName: "subscriptions_viewerId_fk",
+	}),
+	creators: many(subscriptions, { relationName: "subscriptions_creatorId_fk" }),
 }));
 
 export const usersSelectSchema = createSelectSchema(users);
