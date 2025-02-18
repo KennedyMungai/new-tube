@@ -8,14 +8,7 @@ type Props = {
 	onPlay?: () => void;
 };
 
-export const VideoPlayer = ({
-	playbackId,
-	thumbnailUrl,
-	autoPlay,
-	onPlay,
-}: Props) => {
-	// if (!playbackId) return null;
-
+export const VideoPlayer = ({ playbackId, thumbnailUrl, autoPlay, onPlay }: Props) => {
 	return (
 		<div className="relative">
 			<MuxPlayer
