@@ -197,3 +197,16 @@ export const subscriptions = pgTable(
 		}),
 	],
 );
+
+export const subscriptionsRelations = relations(subscriptions, ({ one }) => ({
+	viewerId: one(users, {
+		fields: [subscriptions.viewerId],
+		references: [users.id],
+		relationName: "subscriptions_viewerId_fk",
+	}),
+	creatorId: one(users, {
+		fields: [subscriptions.creatorId],
+		references: [users.id],
+		relationName: "subscriptions_creatorId_fk",
+	}),
+}));
