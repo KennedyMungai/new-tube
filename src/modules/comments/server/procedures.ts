@@ -5,7 +5,7 @@ import {
 	createTRPCRouter,
 	protectedProcedure,
 } from "@/trpc/init";
-import { eq, getTableColumns } from "drizzle-orm";
+import { and, desc, eq, getTableColumns, lt, or } from "drizzle-orm";
 import { z } from "zod";
 
 export const commentsRouter = createTRPCRouter({
@@ -23,9 +23,17 @@ export const commentsRouter = createTRPCRouter({
 			return createdComment;
 		}),
 	getMany: baseProcedure
-		.input(z.object({ videoId: z.string().uuid() }))
+		.input(
+			z.object({
+				videoId: z.string().uuid(),
+				cursor: z
+					.object({ id: z.string().uuid(), updatedAt: z.date() })
+					.nullish(),
+				limit: z.number().min(1).max(100),
+			}),
+		)
 		.query(async ({ input }) => {
-			const { videoId } = input;
+			const { videoId, cursor, limit } = input;
 
 			const commentsData = await db
 				.select({
@@ -33,9 +41,35 @@ export const commentsRouter = createTRPCRouter({
 					user: users,
 				})
 				.from(comments)
-				.where(eq(comments.videoId, videoId))
-				.innerJoin(users, eq(users.id, comments.userId));
+				.where(
+					and(
+						eq(comments.videoId, videoId),
+						cursor
+							? or(
+									lt(comments.updatedAt, cursor.updatedAt),
+									and(
+										eq(comments.updatedAt, cursor.updatedAt),
+										lt(comments.id, cursor.id),
+									),
+								)
+							: undefined,
+					),
+				)
+				.innerJoin(users, eq(users.id, comments.userId))
+				.orderBy(desc(comments.updatedAt), desc(comments.id))
+				.limit(limit + 1);
 
-			return commentsData;
+			const hasMore = commentsData.length > limit;
+
+			// Remove the last item if there is more
+			const items = hasMore ? commentsData.slice(0, -1) : commentsData;
+
+			// Set the next cursor to the last item if there is more data
+			const lastItem = items[items.length - 1];
+			const nextCursor = hasMore
+				? { id: lastItem.id, updatedAt: lastItem.updatedAt }
+				: null;
+
+			return { items, nextCursor };
 		}),
 });
