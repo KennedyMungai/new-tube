@@ -1,5 +1,6 @@
 "use client";
 
+import { InfiniteScroll } from "@/components/infinite-scroll";
 import { DEFAULT_LIMIT } from "@/constants";
 import { VideoGridCard } from "@/modules/videos/ui/components/video-grid-card";
 import { VideoRowCard } from "@/modules/videos/ui/components/video-row-card";
@@ -10,15 +11,16 @@ type Props = {
 };
 
 export const SuggestionsSection = ({ videoId }: Props) => {
-	const [suggestions] = trpc.suggestions.getMany.useSuspenseInfiniteQuery(
-		{
-			videoId,
-			limit: DEFAULT_LIMIT,
-		},
-		{
-			getNextPageParam: (lastPage) => lastPage.nextCursor,
-		},
-	);
+	const [suggestions, query] =
+		trpc.suggestions.getMany.useSuspenseInfiniteQuery(
+			{
+				videoId,
+				limit: DEFAULT_LIMIT,
+			},
+			{
+				getNextPageParam: (lastPage) => lastPage.nextCursor,
+			},
+		);
 
 	return (
 		<>
@@ -36,6 +38,11 @@ export const SuggestionsSection = ({ videoId }: Props) => {
 					)),
 				)}
 			</div>
+			<InfiniteScroll
+				hasNextPage={query.hasNextPage}
+				isFetchingNextPage={query.isFetchingNextPage}
+				fetchNextPage={query.fetchNextPage}
+			/>
 		</>
 	);
 };
