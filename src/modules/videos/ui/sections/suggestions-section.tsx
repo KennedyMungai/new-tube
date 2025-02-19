@@ -5,6 +5,8 @@ import { DEFAULT_LIMIT } from "@/constants";
 import { VideoGridCard } from "@/modules/videos/ui/components/video-grid-card";
 import { VideoRowCard } from "@/modules/videos/ui/components/video-row-card";
 import { trpc } from "@/trpc/client";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 type Props = {
 	videoId: string;
@@ -12,6 +14,16 @@ type Props = {
 };
 
 export const SuggestionsSection = ({ videoId, isManual }: Props) => {
+	return (
+		<Suspense fallback={<p>Loading...</p>}>
+			<ErrorBoundary fallback={<p>Error</p>}>
+				<SuggestionsSectionSuspense videoId={videoId} isManual={isManual} />
+			</ErrorBoundary>
+		</Suspense>
+	);
+};
+
+const SuggestionsSectionSuspense = ({ videoId, isManual }: Props) => {
 	const [suggestions, query] =
 		trpc.suggestions.getMany.useSuspenseInfiniteQuery(
 			{
