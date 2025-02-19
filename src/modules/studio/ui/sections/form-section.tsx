@@ -85,7 +85,7 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 			utils.studio.getOne.invalidate({ id: videoId });
 			utils.studio.getMany.invalidate();
 
-			toast.success("Video updated successfully");
+			toast.success("Video updated ");
 		},
 		onError: (error) => toast.error(error.message),
 	});
@@ -94,20 +94,19 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 		onSuccess: () => {
 			utils.studio.getMany.invalidate();
 
-			toast.success("Video deleted successfully");
+			toast.success("Video deleted ");
 
 			router.push("/studio");
 		},
 		onError: (error) => toast.error(error.message),
 	});
 
-
 	const restoreThumbnail = trpc.videos.restoreThumbnail.useMutation({
 		onSuccess: () => {
 			utils.studio.getMany.invalidate();
 			utils.studio.getOne.invalidate({ id: videoId });
 
-			toast.success("Thumbnail restored successfully");
+			toast.success("Thumbnail restored ");
 		},
 		onError: (error) => toast.error(error.message),
 	});
