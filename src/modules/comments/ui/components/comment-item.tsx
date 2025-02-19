@@ -51,10 +51,12 @@ export const CommentItem = ({ comment }: Props) => {
 
 			toast.success("Comment liked ");
 		},
-		onError: () => {
-			clerk.openSignIn();
-
+		onError: (error) => {
 			toast.error("Something went wrong");
+
+			if (error.data?.code === "UNAUTHORIZED") {
+				clerk.openSignIn();
+			}
 		},
 	});
 	const dislike = trpc.commentReactions.dislike.useMutation({
@@ -63,10 +65,12 @@ export const CommentItem = ({ comment }: Props) => {
 
 			toast.success("Comment disliked ");
 		},
-		onError: () => {
-			clerk.openSignIn();
-
+		onError: (error) => {
 			toast.error("Something went wrong");
+
+			if (error.data?.code === "UNAUTHORIZED") {
+				clerk.openSignIn();
+			}
 		},
 	});
 
