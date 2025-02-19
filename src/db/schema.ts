@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import {
+	foreignKey,
 	integer,
 	pgEnum,
 	pgTable,
@@ -218,18 +219,31 @@ export const subscriptionsRelations = relations(subscriptions, ({ one }) => ({
 	}),
 }));
 
-export const comments = pgTable("comments", {
-	id: uuid("id").defaultRandom().primaryKey(),
-	userId: uuid("user_id")
-		.references(() => users.id, { onDelete: "cascade" })
-		.notNull(),
-	videoId: uuid("video_id")
-		.references(() => videos.id, { onDelete: "cascade" })
-		.notNull(),
-	value: text("value").notNull(),
-	createdAt: timestamp("created_at").defaultNow().notNull(),
-	updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+export const comments = pgTable(
+	"comments",
+	{
+		id: uuid("id").defaultRandom().primaryKey(),
+		parentId: uuid("parent_id"),
+		userId: uuid("user_id")
+			.references(() => users.id, { onDelete: "cascade" })
+			.notNull(),
+		videoId: uuid("video_id")
+			.references(() => videos.id, { onDelete: "cascade" })
+			.notNull(),
+		value: text("value").notNull(),
+		createdAt: timestamp("created_at").defaultNow().notNull(),
+		updatedAt: timestamp("updated_at").defaultNow().notNull(),
+	},
+	(t) => {
+		return [
+			foreignKey({
+				columns: [t.parentId],
+				foreignColumns: [t.id],
+				name: "fk_comments_parent_id",
+			}).onDelete("cascade"),
+		];
+	},
+);
 
 export const commentsRelations = relations(comments, ({ one, many }) => ({
 	user: one(users, {
