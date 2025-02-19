@@ -78,7 +78,9 @@ export const CommentItem = ({ comment }: Props) => {
 									onClick={() => {}}>
 									<ThumbsUpIcon className={cn("")} />
 								</Button>
-								<span className="text-xs text-muted-foreground">0</span>
+								<span className="text-xs text-muted-foreground">
+									{comment.likeCount ?? 0}
+								</span>
 							</div>
 							<div className="flex items-center">
 								<Button
@@ -89,7 +91,9 @@ export const CommentItem = ({ comment }: Props) => {
 									onClick={() => {}}>
 									<ThumbsDownIcon className={cn("")} />
 								</Button>
-								<span className="text-xs text-muted-foreground">0</span>
+								<span className="text-xs text-muted-foreground">
+									{comment.dislikeCount ?? 0}
+								</span>
 							</div>
 						</div>
 					</div>
