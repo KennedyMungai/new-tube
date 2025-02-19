@@ -19,9 +19,18 @@ import { z } from "zod";
 type Props = {
 	videoId: string;
 	onSuccess?: () => void;
+	onCancel?: () => void;
+	variant?: "reply" | "comment";
+	parentId?: string;
 };
 
-export const CommentForm = ({ videoId, onSuccess }: Props) => {
+export const CommentForm = ({
+	videoId,
+	onCancel,
+	onSuccess,
+	parentId,
+	variant = "comment",
+}: Props) => {
 	const { user } = useUser();
 
 	const clerk = useClerk();
@@ -49,11 +58,18 @@ export const CommentForm = ({ videoId, onSuccess }: Props) => {
 		defaultValues: {
 			videoId,
 			value: "",
+			parentId: !!parentId ? parentId : null,
 		},
 	});
 
 	const handleSubmit = async (values: z.infer<typeof commentsInsertSchema>) => {
 		create.mutateAsync(values);
+	};
+
+	const handleCancel = () => {
+		form.reset();
+
+		onCancel?.();
 	};
 
 	return (
@@ -75,7 +91,11 @@ export const CommentForm = ({ videoId, onSuccess }: Props) => {
 								<FormControl>
 									<Textarea
 										{...field}
-										placeholder="Add a comment"
+										placeholder={
+											variant === "comment"
+												? "Add a comment"
+												: "Reply to this comment"
+										}
 										className="resize-none bg-transparent overflow-hidden min-h-0"
 									/>
 								</FormControl>
@@ -85,6 +105,11 @@ export const CommentForm = ({ videoId, onSuccess }: Props) => {
 					/>
 
 					<div className="justify-end gap-2 mt-2 flex">
+						{onCancel && (
+							<Button variant={"ghost"} type="button" onClick={handleCancel}>
+								Cancel
+							</Button>
+						)}
 						<Button
 							type="submit"
 							size="sm"
@@ -94,7 +119,7 @@ export const CommentForm = ({ videoId, onSuccess }: Props) => {
 								!form.formState.isValid ||
 								create.isPending
 							}>
-							Comment
+							{variant === "comment" ? "Comment" : "Submit"}
 						</Button>
 					</div>
 				</div>

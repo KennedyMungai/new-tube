@@ -46,7 +46,8 @@ const CommentsSectionSuspense = ({ videoId }: Props) => {
 		<div className="mt-6">
 			<div className="flex flex-col gap-6">
 				<h1 className="text-xl font-bold">
-					{comments.pages[0].totalCount} Comments
+					{comments.pages[0].totalCount}{" "}
+					{comments.pages[0].totalCount === 1 ? "comment" : "comments"}
 				</h1>
 				<CommentForm videoId={videoId} />
 			</div>
