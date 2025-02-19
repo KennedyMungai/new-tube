@@ -39,6 +39,19 @@ export const commentReactionsRouter = createTRPCRouter({
 
 				return deletedViewerReaction;
 			}
+
+			const [createdCommentReaction] = await db
+				.insert(commentReactions)
+				.values({ userId, commentId, type: "like" })
+				.onConflictDoUpdate({
+					target: [commentReactions.userId, commentReactions.commentId],
+					set: {
+						type: "like",
+					},
+				})
+				.returning();
+
+			return createdCommentReaction;
 		}),
 	dislike: protectedProcedure
 		.input(
@@ -74,5 +87,18 @@ export const commentReactionsRouter = createTRPCRouter({
 
 				return deletedViewerReaction;
 			}
+
+            const [createdCommentReaction] = await db
+							.insert(commentReactions)
+							.values({ userId, commentId, type: "dislike" })
+							.onConflictDoUpdate({
+								target: [commentReactions.userId, commentReactions.commentId],
+								set: {
+									type: "dislike",
+								},
+							})
+							.returning();
+
+						return createdCommentReaction;
 		}),
 });
