@@ -32,7 +32,7 @@ export const CommentItem = ({ comment }: Props) => {
 
 	const remove = trpc.comments.remove.useMutation({
 		onSuccess: () => {
-			toast.success("Comment deleted successfully");
+			toast.success("Comment deleted ");
 
 			utils.comments.getMany.invalidate({ videoId: comment.videoId });
 		},
@@ -44,6 +44,33 @@ export const CommentItem = ({ comment }: Props) => {
 			}
 		},
 	});
+
+	const like = trpc.commentReactions.like.useMutation({
+		onSuccess: () => {
+			utils.comments.getMany.invalidate({ videoId: comment.videoId });
+
+			toast.success("Comment liked ");
+		},
+		onError: () => {
+			clerk.openSignIn();
+
+			toast.error("Something went wrong");
+		},
+	});
+	const dislike = trpc.commentReactions.dislike.useMutation({
+		onSuccess: () => {
+			utils.comments.getMany.invalidate({ videoId: comment.videoId });
+
+			toast.success("Comment disliked ");
+		},
+		onError: () => {
+			clerk.openSignIn();
+
+			toast.error("Something went wrong");
+		},
+	});
+
+	const isPending = like.isPending || dislike.isPending || remove.isPending;
 
 	return (
 		<div>
@@ -71,11 +98,11 @@ export const CommentItem = ({ comment }: Props) => {
 						<div className="flex items-center gap-x-1">
 							<div className="flex items-center">
 								<Button
-									className="size-8 rounded-full"
+									className="size-8 rounded-full disabled:cursor-not-allowed"
 									size="icon"
 									variant={"ghost"}
-									disabled={false}
-									onClick={() => {}}>
+									disabled={isPending}
+									onClick={() => like.mutate({ commentId: comment.id })}>
 									<ThumbsUpIcon
 										className={cn(
 											comment.viewerReaction === "like" && "fill-black",
@@ -88,11 +115,11 @@ export const CommentItem = ({ comment }: Props) => {
 							</div>
 							<div className="flex items-center">
 								<Button
-									className="size-8 rounded-full"
+									className="size-8 rounded-full disabled:cursor-not-allowed"
 									size="icon"
 									variant={"ghost"}
-									disabled={false}
-									onClick={() => {}}>
+									disabled={isPending}
+									onClick={() => dislike.mutate({ commentId: comment.id })}>
 									<ThumbsDownIcon
 										className={cn(
 											comment.viewerReaction === "dislike" && "fill-black",
@@ -121,7 +148,9 @@ export const CommentItem = ({ comment }: Props) => {
 						</DropdownMenuItem>
 						{comment.user.clerkId === userId && (
 							<DropdownMenuItem
-								onClick={() => remove.mutate({ id: comment.id })}>
+								onClick={() => remove.mutate({ id: comment.id })}
+								disabled={isPending}
+								className="disabled:cursor-not-allowed">
 								<Trash2Icon className="size-4" /> Delete
 							</DropdownMenuItem>
 						)}
