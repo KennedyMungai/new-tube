@@ -48,8 +48,6 @@ export const CommentItem = ({ comment }: Props) => {
 	const like = trpc.commentReactions.like.useMutation({
 		onSuccess: () => {
 			utils.comments.getMany.invalidate({ videoId: comment.videoId });
-
-			toast.success("Comment liked ");
 		},
 		onError: (error) => {
 			toast.error("Something went wrong");
@@ -62,8 +60,6 @@ export const CommentItem = ({ comment }: Props) => {
 	const dislike = trpc.commentReactions.dislike.useMutation({
 		onSuccess: () => {
 			utils.comments.getMany.invalidate({ videoId: comment.videoId });
-
-			toast.success("Comment disliked ");
 		},
 		onError: (error) => {
 			toast.error("Something went wrong");
