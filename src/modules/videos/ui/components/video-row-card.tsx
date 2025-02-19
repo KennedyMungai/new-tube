@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import {
 	Tooltip,
 	TooltipContent,
@@ -42,8 +43,13 @@ interface Props extends VariantProps<typeof videoRowCardVariants> {
 	onRemove?: () => void;
 }
 
+// TODO: Render a proper skeleton
 export const VideoCardSkeleton = () => {
-	return <div>Skeleton</div>;
+	return (
+		<div>
+			<Skeleton />
+		</div>
+	);
 };
 
 export const VideoRowCard = ({ size, data, onRemove }: Props) => {
