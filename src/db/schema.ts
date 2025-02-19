@@ -47,6 +47,7 @@ export const userRelations = relations(users, ({ many }) => ({
 	}),
 	creators: many(subscriptions, { relationName: "subscriptions_creatorId_fk" }),
 	comments: many(comments),
+	commentReactions: many(commentReactions),
 }));
 
 export const usersSelectSchema = createSelectSchema(users);
@@ -230,7 +231,7 @@ export const comments = pgTable("comments", {
 	updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const commentsRelations = relations(comments, ({ one }) => ({
+export const commentsRelations = relations(comments, ({ one, many }) => ({
 	user: one(users, {
 		fields: [comments.userId],
 		references: [users.id],
@@ -239,6 +240,7 @@ export const commentsRelations = relations(comments, ({ one }) => ({
 		fields: [comments.videoId],
 		references: [videos.id],
 	}),
+	commentReactions: many(commentReactions),
 }));
 
 export const commentsSelectSchema = createSelectSchema(comments);
@@ -269,3 +271,14 @@ export const commentReactions = pgTable(
 		}),
 	],
 );
+
+export const commentRelations = relations(commentReactions, ({ one }) => ({
+	comment: one(comments, {
+		fields: [commentReactions.commentId],
+		references: [comments.id],
+	}),
+	user: one(users, {
+		fields: [commentReactions.userId],
+		references: [users.id],
+	}),
+}));
