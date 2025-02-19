@@ -62,7 +62,7 @@ export const CommentItem = ({ comment }: Props) => {
 					<p className="text-sm">{comment.value}</p>
 					{/* TODO: Reactions */}
 				</div>
-				<DropdownMenu>
+				<DropdownMenu modal={false}>
 					<DropdownMenuTrigger asChild>
 						<Button
 							variant={"ghost"}
