@@ -151,31 +151,29 @@ export const CommentItem = ({ comment, variant = "comment" }: Props) => {
 						</div>
 					</div>
 				</div>
-				{comment.user.clerkId === userId && variant == "reply" && (
-					<DropdownMenu modal={false}>
-						<DropdownMenuTrigger asChild>
-							<Button
-								variant={"ghost"}
-								size={"icon"}
-								className="size-8 rounded-full">
-								<MoreVerticalIcon />
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end">
-							<DropdownMenuItem onClick={() => setIsReplyOpen(true)}>
-								<MessageSquareIcon className="size-4" /> Reply
+				<DropdownMenu modal={false}>
+					<DropdownMenuTrigger asChild>
+						<Button
+							variant={"ghost"}
+							size={"icon"}
+							className="size-8 rounded-full">
+							<MoreVerticalIcon />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align="end">
+						<DropdownMenuItem onClick={() => setIsReplyOpen(true)}>
+							<MessageSquareIcon className="size-4" /> Reply
+						</DropdownMenuItem>
+						{comment.user.clerkId === userId && (
+							<DropdownMenuItem
+								onClick={() => remove.mutate({ id: comment.id })}
+								disabled={isPending}
+								className="disabled:cursor-not-allowed">
+								<Trash2Icon className="size-4" /> Delete
 							</DropdownMenuItem>
-							{comment.user.clerkId === userId && (
-								<DropdownMenuItem
-									onClick={() => remove.mutate({ id: comment.id })}
-									disabled={isPending}
-									className="disabled:cursor-not-allowed">
-									<Trash2Icon className="size-4" /> Delete
-								</DropdownMenuItem>
-							)}
-						</DropdownMenuContent>
-					</DropdownMenu>
-				)}
+						)}
+					</DropdownMenuContent>
+				</DropdownMenu>
 			</div>
 			{isReplyOpen && variant === "comment" && (
 				<div className="mt-4 pl-14">
