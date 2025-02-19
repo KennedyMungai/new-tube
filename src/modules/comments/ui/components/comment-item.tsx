@@ -79,7 +79,7 @@ export const CommentItem = ({ comment }: Props) => {
 									<ThumbsUpIcon className={cn("")} />
 								</Button>
 								<span className="text-xs text-muted-foreground">
-									{comment.likeCount ?? 0}
+									{comment.likeCount}
 								</span>
 							</div>
 							<div className="flex items-center">
@@ -92,7 +92,7 @@ export const CommentItem = ({ comment }: Props) => {
 									<ThumbsDownIcon className={cn("")} />
 								</Button>
 								<span className="text-xs text-muted-foreground">
-									{comment.dislikeCount ?? 0}
+									{comment.dislikeCount}
 								</span>
 							</div>
 						</div>
