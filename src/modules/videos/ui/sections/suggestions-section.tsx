@@ -8,9 +8,10 @@ import { trpc } from "@/trpc/client";
 
 type Props = {
 	videoId: string;
+	isManual?: boolean;
 };
 
-export const SuggestionsSection = ({ videoId }: Props) => {
+export const SuggestionsSection = ({ videoId, isManual }: Props) => {
 	const [suggestions, query] =
 		trpc.suggestions.getMany.useSuspenseInfiniteQuery(
 			{
@@ -42,6 +43,7 @@ export const SuggestionsSection = ({ videoId }: Props) => {
 				hasNextPage={query.hasNextPage}
 				isFetchingNextPage={query.isFetchingNextPage}
 				fetchNextPage={query.fetchNextPage}
+				isManual={isManual}
 			/>
 		</>
 	);
