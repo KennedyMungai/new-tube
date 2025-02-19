@@ -1,4 +1,5 @@
 import { VideoGetManyOutput } from "@/modules/videos/types";
+import { VideoInfo } from "@/modules/videos/ui/components/video-info";
 import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
 import Link from "next/link";
 
@@ -18,6 +19,7 @@ export const VideoGridCard = ({ data, onRemove }: Props) => {
 					duration={data.duration}
 				/>
 			</Link>
+			<VideoInfo data={data} onRemove={onRemove} />
 		</div>
 	);
 };
