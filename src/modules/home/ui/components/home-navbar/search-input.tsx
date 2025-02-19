@@ -1,7 +1,30 @@
+"use client";
+
 import { SearchIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 export const SearchInput = () => {
-	// TODO: Add search functionality
+	const [value, setValue] = useState("");
+
+	const router = useRouter();
+
+	const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		const url = new URL(
+			"/search",
+			process.env.VERCEL_URL ?? "http://localhost:3000",
+		);
+		const newQuery = value.trim();
+
+		url.searchParams.set("query", encodeURIComponent(newQuery));
+
+		if (newQuery === "") url.searchParams.delete("query");
+
+		setValue(newQuery);
+		router.push(url.toString());
+	};
 
 	return (
 		<form action="" className="flex w-full max-w-[600px]">
