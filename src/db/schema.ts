@@ -257,8 +257,12 @@ export const commentsRelations = relations(comments, ({ one, many }) => ({
 	parent: one(comments, {
 		fields: [comments.parentId],
 		references: [comments.id],
+		relationName: "fk_comments_parent_id",
 	}),
 	commentReactions: many(commentReactions),
+	replies: many(comments, {
+		relationName: "fk_comments_parent_id",
+	}),
 }));
 
 export const commentsSelectSchema = createSelectSchema(comments);
