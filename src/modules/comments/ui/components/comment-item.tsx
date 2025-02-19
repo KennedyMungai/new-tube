@@ -1,13 +1,43 @@
+import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "@/components/user-avatar";
 import { CommentGetManyOutput } from "@/modules/comments/types";
+import { trpc } from "@/trpc/client";
+import { useAuth, useClerk } from "@clerk/nextjs";
 import { formatDistanceToNow } from "date-fns";
+import { MessageSquareIcon, MoreVerticalIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 type Props = {
 	comment: CommentGetManyOutput["items"][number];
 };
 
 export const CommentItem = ({ comment }: Props) => {
+	const { userId } = useAuth();
+	const clerk = useClerk();
+	const utils = trpc.useUtils();
+
+	const remove = trpc.comments.remove.useMutation({
+		onSuccess: () => {
+			toast.success("Comment deleted successfully");
+
+			utils.comments.getMany.invalidate({ videoId: comment.videoId });
+		},
+		onError: (error) => {
+			toast.error("Something went wrong");
+
+			if (error.data?.code === "UNAUTHORIZED") {
+				clerk.openSignIn();
+			}
+		},
+	});
+
 	return (
 		<div>
 			<div className="flex gap-4">
@@ -30,7 +60,29 @@ export const CommentItem = ({ comment }: Props) => {
 						</div>
 					</Link>
 					<p className="text-sm">{comment.value}</p>
+					{/* TODO: Reactions */}
 				</div>
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button
+							variant={"ghost"}
+							size={"icon"}
+							className="size-8 rounded-full">
+							<MoreVerticalIcon />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align="end">
+						<DropdownMenuItem onClick={() => {}}>
+							<MessageSquareIcon className="size-4" /> Reply
+						</DropdownMenuItem>
+						{comment.user.clerkId === userId && (
+							<DropdownMenuItem
+								onClick={() => remove.mutate({ id: comment.id })}>
+								<Trash2Icon className="size-4" /> Delete
+							</DropdownMenuItem>
+						)}
+					</DropdownMenuContent>
+				</DropdownMenu>
 			</div>
 		</div>
 	);
