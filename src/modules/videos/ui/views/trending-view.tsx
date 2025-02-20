@@ -1,3 +1,3 @@
 export const TrendingView = () => {
-	return <div></div>;
+	return <div>TrendingView</div>;
 };
