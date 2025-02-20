@@ -49,6 +49,7 @@ export const userRelations = relations(users, ({ many }) => ({
 	creators: many(subscriptions, { relationName: "subscriptions_creatorId_fk" }),
 	comments: many(comments),
 	commentReactions: many(commentReactions),
+	playlists: many(playlists),
 }));
 
 export const usersSelectSchema = createSelectSchema(users);
@@ -301,6 +302,24 @@ export const commentRelations = relations(commentReactions, ({ one }) => ({
 	}),
 	user: one(users, {
 		fields: [commentReactions.userId],
+		references: [users.id],
+	}),
+}));
+
+export const playlists = pgTable("playlists", {
+	id: uuid("id").defaultRandom().primaryKey(),
+	name: varchar("name", { length: 255 }).notNull(),
+	description: text("description"),
+	userId: uuid("user_id")
+		.references(() => users.id, { onDelete: "cascade" })
+		.notNull(),
+	createdAt: timestamp("created_at").defaultNow().notNull(),
+	updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const playlistsRelations = relations(playlists, ({ one }) => ({
+	user: one(users, {
+		fields: [playlists.userId],
 		references: [users.id],
 	}),
 }));
