@@ -108,6 +108,7 @@ export const videoRelations = relations(videos, ({ one, many }) => ({
 	videoView: many(videoViews),
 	videoReaction: many(videoReactions),
 	comments: many(comments),
+	playlistVideos: many(playlistVideos),
 }));
 
 export const videoInsertSchema = createInsertSchema(videos);
