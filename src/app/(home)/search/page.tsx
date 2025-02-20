@@ -7,7 +7,7 @@ type Props = {
 const SearchPage = async ({ searchParams }: Props) => {
 	const { query, categoryId } = await searchParams;
 
-	return <div>SearchPage</div>;
+	return <div>{query ?? "No query was detected"}</div>;
 };
 
 export default SearchPage;
