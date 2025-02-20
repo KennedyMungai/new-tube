@@ -22,7 +22,9 @@ type Props = {
 
 export const ResultsSection = ({ categoryId, query }: Props) => {
 	return (
-		<Suspense fallback={<ResultsSectionSkeleton />}>
+		<Suspense
+			key={`${query}-${categoryId}`}
+			fallback={<ResultsSectionSkeleton />}>
 			<ErrorBoundary fallback={<p>Error</p>}>
 				<ResultsSectionSuspense categoryId={categoryId} query={query} />
 			</ErrorBoundary>
