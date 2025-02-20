@@ -23,6 +23,7 @@ type Props = {
 export const ResultsSection = ({ categoryId, query }: Props) => {
 	return (
 		<Suspense
+			// HACK: So that the component updates whenever either the categoryId or query changes
 			key={`${query}-${categoryId}`}
 			fallback={<ResultsSectionSkeleton />}>
 			<ErrorBoundary fallback={<p>Error</p>}>
