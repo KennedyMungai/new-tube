@@ -25,7 +25,7 @@ function getUrl() {
 	const base = (() => {
 		if (typeof window !== "undefined") return "";
 		// TODO: Modify for deployment outside vercel
-		if (APP_URL) return `${APP_URL}`;
+		if (APP_URL) return `https://${APP_URL}`;
 		return "http://localhost:3000";
 	})();
 	return `${base}/api/trpc`;
