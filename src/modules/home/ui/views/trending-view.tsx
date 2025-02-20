@@ -1,4 +1,4 @@
-import { TrendingVideosSection } from "@/modules/videos/ui/sections/trending-videos-section";
+import { TrendingVideosSection } from "@/modules/home/ui/sections/trending-videos-section";
 
 export const TrendingView = () => {
 	return (
