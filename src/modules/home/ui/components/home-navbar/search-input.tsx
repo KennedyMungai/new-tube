@@ -14,10 +14,7 @@ export const SearchInput = () => {
 	const handleSearch = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		const url = new URL(
-			"/search",
-			APP_URL !== undefined ? `https://${APP_URL}` : "http://localhost:3000",
-		);
+		const url = new URL("/search", APP_URL);
 		const newQuery = value.trim();
 
 		url.searchParams.set("query", encodeURIComponent(newQuery));

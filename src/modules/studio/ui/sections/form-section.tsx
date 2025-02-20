@@ -132,7 +132,7 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 	const onSubmit = async (data: z.infer<typeof videoUpdateSchema>) =>
 		await update.mutateAsync(data);
 
-	const fullUrl = `${APP_URL !== undefined ? `https://${APP_URL}` : "http://localhost:3000"}/videos/${videoId}`;
+	const fullUrl = `${APP_URL}/videos/${videoId}`;
 
 	const onCopy = async () => {
 		await navigator.clipboard.writeText(fullUrl);
