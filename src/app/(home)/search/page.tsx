@@ -12,7 +12,7 @@ const SearchPage = async ({ searchParams }: Props) => {
 	const { query, categoryId } = await searchParams;
 
 	void trpc.categories.getMany.prefetch();
-	void trpc.search.getMany.prefetch({
+	void trpc.search.getMany.prefetchInfinite({
 		query,
 		categoryId,
 		limit: DEFAULT_LIMIT,
