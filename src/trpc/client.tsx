@@ -24,7 +24,7 @@ function getQueryClient() {
 function getUrl() {
 	const base = (() => {
 		if (typeof window !== "undefined") return "";
-		// TODO: Modify for deployment outside vercel
+		// Crucial to modify in .env to production domain
 		return APP_URL;
 	})();
 	return `${base}/api/trpc`;
