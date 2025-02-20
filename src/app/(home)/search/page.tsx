@@ -1,3 +1,6 @@
+import { SearchView } from "@/modules/search/ui/views/search-view";
+import { HydrateClient, trpc } from "@/trpc/server";
+
 export const dynamic = "force-dynamic";
 
 type Props = {
@@ -7,11 +10,12 @@ type Props = {
 const SearchPage = async ({ searchParams }: Props) => {
 	const { query, categoryId } = await searchParams;
 
+	void trpc.categories.getMany.prefetch();
+
 	return (
-		<div>
-			{query ?? "No query was detected"} in category{" "}
-			{categoryId ?? "no category given"}
-		</div>
+		<HydrateClient>
+			<SearchView query={query} categoryId={categoryId} />
+		</HydrateClient>
 	);
 };
 
