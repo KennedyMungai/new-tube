@@ -1,7 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { APP_URL } from "@/constants";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, XIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -35,9 +36,18 @@ export const SearchInput = () => {
 					placeholder="Search"
 					value={value}
 					onChange={(e) => setValue(e.target.value)}
-					className="w-full pl-4 py-2 pr-12 rounded-l-full border focus:outline-none focus:border-blue-500"
+					className="w-full pl-4 py-2 pr-12 rounded-l-full border focus:outline-none focus:border-blue-500 text-gray-500"
 				/>
-				{/* TODO: Add remove search button */}
+				{value && (
+					<Button
+						onClick={() => setValue("")}
+						size="icon"
+						variant="ghost"
+						type="button"
+						className="rounded-full absolute right-2 top-0.5 -translate-1/2">
+						<XIcon className="text-gray-500" />
+					</Button>
+				)}
 			</div>
 			<button
 				type="submit"
