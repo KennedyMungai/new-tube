@@ -8,7 +8,7 @@ export const searchRouter = createTRPCRouter({
 	getMany: baseProcedure
 		.input(
 			z.object({
-				query: z.string(),
+				query: z.string().nullish(),
 				categoryId: z.string().uuid().nullish(),
 				cursor: z
 					.object({
