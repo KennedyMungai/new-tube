@@ -175,7 +175,7 @@ export const videosRouter = createTRPCRouter({
 
 			return { items, nextCursor };
 		}),
-	getTrending: baseProcedure
+	getManyTrending: baseProcedure
 		.input(
 			z.object({
 				cursor: z
@@ -188,9 +188,12 @@ export const videosRouter = createTRPCRouter({
 			}),
 		)
 		.query(async ({ input }) => {
-			const { limit, cursor} = input;
+			const { limit, cursor } = input;
 
-			const viewCountSubquery = db.$count(videoViews, eq(videoViews.videoId, videos.id));
+			const viewCountSubquery = db.$count(
+				videoViews,
+				eq(videoViews.videoId, videos.id),
+			);
 
 			const data = await db
 				.select({
@@ -219,9 +222,9 @@ export const videosRouter = createTRPCRouter({
 						eq(videos.visibility, "public"),
 						cursor
 							? or(
-									lt(viewCountSubquery , cursor.viewCount),
+									lt(viewCountSubquery, cursor.viewCount),
 									and(
-										eq(viewCountSubquery , cursor.viewCount),
+										eq(viewCountSubquery, cursor.viewCount),
 										lt(videos.id, cursor.id),
 									),
 								)
