@@ -4,7 +4,7 @@ import { HydrateClient, trpc } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";
 
-const SubscriptionsPage = () => {
+const SubscriptionsPage = async () => {
 	void trpc.videos.getManySubscribed.prefetchInfinite({ limit: DEFAULT_LIMIT });
 
 	return (
