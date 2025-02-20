@@ -16,7 +16,7 @@ type Props = {
 
 export const HomeVideosSection = ({ categoryId }: Props) => {
 	return (
-		<Suspense fallback={<HomeVideosSectionSkeleton />}>
+		<Suspense key={categoryId} fallback={<HomeVideosSectionSkeleton />}>
 			<ErrorBoundary fallback={<p>Error</p>}>
 				<HomeVideosSectionSuspense categoryId={categoryId} />
 			</ErrorBoundary>
