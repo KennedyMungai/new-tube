@@ -23,7 +23,7 @@ type Props = {
 // TODO: Implement the remaining functionality
 export const VideoMenu = ({ videoId, onRemove, variant = "ghost" }: Props) => {
 	const onShare = () => {
-		const fullUrl = `${APP_URL ?? "http://localhost:3000"}/videos/${videoId}`;
+		const fullUrl = `${APP_URL === undefined ? "http://localhost:3000" : APP_URL}/videos/${videoId}`;
 		navigator.clipboard.writeText(fullUrl);
 		toast.success("Link copied to the clipboard");
 	};
