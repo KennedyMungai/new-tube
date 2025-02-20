@@ -48,7 +48,7 @@ interface Props extends VariantProps<typeof videoRowCardVariants> {
 
 // TODO: Render a proper skeleton
 export const VideoRowCardSkeleton = ({
-	size,
+	size = "default",
 }: VariantProps<typeof videoRowCardVariants>) => {
 	return (
 		<div className={videoRowCardVariants({ size })}>
