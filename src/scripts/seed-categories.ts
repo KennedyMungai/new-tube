@@ -1,7 +1,6 @@
 import { db } from "@/db";
 import { categories } from "@/db/schema";
 
-// TODO: Create a script to seed categories
 const categoryNames = [
 	"Cars and Vehicles",
 	"Comedy",
