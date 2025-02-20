@@ -24,6 +24,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { APP_URL } from "@/constants";
 import { videoUpdateSchema } from "@/db/schema";
 import { snakeCaseToTitle } from "@/lib/utils";
 import { ThumbnailUploadModal } from "@/modules/studio/ui/components/thumbnail-upload-modal";
@@ -131,7 +132,7 @@ const FormSectionSuspense = ({ videoId }: Props) => {
 	const onSubmit = async (data: z.infer<typeof videoUpdateSchema>) =>
 		await update.mutateAsync(data);
 
-	const fullUrl = `${process.env.VERCEL_URL ?? "http://localhost:3000"}/videos/${videoId}`;
+	const fullUrl = `${APP_URL ?? "http://localhost:3000"}/videos/${videoId}`;
 
 	const onCopy = async () => {
 		await navigator.clipboard.writeText(fullUrl);
