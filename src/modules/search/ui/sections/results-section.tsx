@@ -40,7 +40,7 @@ const ResultsSectionSkeleton = () => {
 					<VideoRowCardSkeleton key={index} />
 				))}
 			</div>
-			<div className="flex flex-col gap-4 p-4 gap-y-10 pt-6 md:hidden">
+			<div className="flex flex-col gap-4 p-4 pt-6 md:hidden">
 				{Array.from({ length: 5 }).map((_, index) => (
 					<VideoGridCardSkeleton key={index} />
 				))}
