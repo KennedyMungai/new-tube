@@ -27,6 +27,10 @@ export const FilterCarousel = ({ onSelect, data, isLoading, value }: Props) => {
 	const [api, setApi] = useState<CarouselApi>();
 	const [current, setCurrent] = useState(0);
 	const [count, setCount] = useState(0);
+	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => setIsMounted(true), []);
+
 
 	useEffect(() => {
 		if (!api) return;
@@ -38,6 +42,8 @@ export const FilterCarousel = ({ onSelect, data, isLoading, value }: Props) => {
 			setCurrent(api.selectedScrollSnap() + 1);
 		});
 	}, [api]);
+
+	if (!isMounted) return null;
 
 	return (
 		<div className="relative w-full">
