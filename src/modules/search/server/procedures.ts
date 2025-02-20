@@ -1,30 +1,15 @@
 import { db } from "@/db";
 import { videos } from "@/db/schema";
-import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
-import { TRPCError } from "@trpc/server";
-import { and, desc, eq, lt, or } from "drizzle-orm";
+import { baseProcedure, createTRPCRouter } from "@/trpc/init";
+import { and, desc, eq, ilike, lt, or } from "drizzle-orm";
 import { z } from "zod";
 
 export const searchRouter = createTRPCRouter({
-	getOne: protectedProcedure
-		.input(z.object({ id: z.string().uuid() }))
-		.query(async ({ ctx, input }) => {
-			const { id: userId } = ctx.user;
-			const { id } = input;
-
-			const [video] = await db
-				.select()
-				.from(videos)
-				.where(and(eq(videos.userId, userId), eq(videos.id, id)));
-
-			if (!video)
-				throw new TRPCError({ code: "NOT_FOUND", message: "Video not found" });
-
-			return video;
-		}),
-	getMany: protectedProcedure
+	getMany: baseProcedure
 		.input(
 			z.object({
+				query: z.string(),
+				categoryId: z.string().uuid().nullish(),
 				cursor: z
 					.object({
 						id: z.string().uuid(),
@@ -34,16 +19,16 @@ export const searchRouter = createTRPCRouter({
 				limit: z.number().min(1).max(100),
 			}),
 		)
-		.query(async ({ ctx, input }) => {
-			const { limit, cursor } = input;
-			const { id: userId } = ctx.user;
+		.query(async ({ input }) => {
+			const { limit, cursor, query, categoryId } = input;
 
 			const data = await db
 				.select()
 				.from(videos)
 				.where(
 					and(
-						eq(videos.userId, userId),
+						ilike(videos.title, `%${query}%`),
+						categoryId ? eq(videos.categoryId, categoryId) : undefined,
 						cursor
 							? or(
 									lt(videos.updatedAt, cursor.updatedAt),
