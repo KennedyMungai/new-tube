@@ -15,6 +15,7 @@ import {
 	type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const items: {
 	title: string;
@@ -43,6 +44,7 @@ const items: {
 export const MainSection = () => {
 	const clerk = useClerk();
 	const { isSignedIn } = useAuth();
+	const pathname = usePathname();
 
 	return (
 		<SidebarGroup>
@@ -52,7 +54,7 @@ export const MainSection = () => {
 						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton
 								tooltip={item.title}
-								isActive={false} // TODO: Change to look at current pathname
+								isActive={pathname === item.url}
 								asChild
 								onClick={(e) => {
 									if (!isSignedIn && item.auth) {
