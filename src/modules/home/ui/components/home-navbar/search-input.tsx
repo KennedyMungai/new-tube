@@ -3,13 +3,16 @@
 import { Button } from "@/components/ui/button";
 import { APP_URL } from "@/constants";
 import { SearchIcon, XIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export const SearchInput = () => {
-	const [value, setValue] = useState("");
-
 	const router = useRouter();
+
+	const searchParams = useSearchParams();
+	const query = searchParams.get("query") ?? "";
+
+	const [value, setValue] = useState(query);
 
 	const handleSearch = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
