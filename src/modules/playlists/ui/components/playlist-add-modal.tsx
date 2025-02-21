@@ -26,7 +26,7 @@ export const PlaylistAddModal = ({ onOpenChange, open, videoId }: Props) => {
 	);
 
 	const handleOpenChange = () => {
-		utils.playlists.getManyForVideo.reset({ videoId, limit: DEFAULT_LIMIT });
+		utils.playlists.getManyForVideo.reset();
 
 		onOpenChange(false);
 	};
