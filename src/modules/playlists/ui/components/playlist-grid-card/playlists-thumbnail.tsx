@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { ListVideoIcon, PlayIcon } from "lucide-react";
 import Image from "next/image";
@@ -8,6 +9,14 @@ type Props = {
 	title: string;
 	videoCount: number;
 	className?: string;
+};
+
+export const PlaylistsThumbnailSkeleton = () => {
+	return (
+		<div className="relative w-full overflow-hidden rounded-xl aspect-video">
+			<Skeleton className="size-full" />
+		</div>
+	);
 };
 
 export const PlaylistsThumbnail = ({
