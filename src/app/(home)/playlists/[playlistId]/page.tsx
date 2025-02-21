@@ -11,6 +11,7 @@ type Props = {
 const PlaylistPage = async ({ params }: Props) => {
 	const { playlistId } = await params;
 
+    void trpc.playlists.getOne.prefetch({ playlistId });
 	void trpc.playlists.getVideos.prefetchInfinite({
 		playlistId,
 		limit: DEFAULT_LIMIT,
