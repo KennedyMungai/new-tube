@@ -490,7 +490,12 @@ export const playlistsRouter = createTRPCRouter({
 
 			const [deletedPlaylistVideo] = await db
 				.delete(playlistVideos)
-				.where(and(eq(playlists.id, playlistId), eq(videos.id, videoId)))
+				.where(
+					and(
+						eq(playlistVideos.playlistId, playlistId),
+						eq(playlistVideos.videoId, videoId),
+					),
+				)
 				.returning();
 
 			return deletedPlaylistVideo;
