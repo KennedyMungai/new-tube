@@ -81,8 +81,15 @@ export const PlaylistAddModal = ({ onOpenChange, open, videoId }: Props) => {
 						<Button
 							key={playlist.id}
 							variant={"ghost"}
-							className="w-full justify-start px-2 [&_svg]:size-5"
-							size="lg">
+							size="lg"
+							onClick={() => {
+								if (playlist.containsVideo) {
+									removeVideo.mutate({ playlistId: playlist.id, videoId });
+								} else {
+									addVideo.mutate({ playlistId: playlist.id, videoId });
+								}
+							}}
+							className="w-full justify-start px-2 [&_svg]:size-5">
 							{playlist.containsVideo ? (
 								<SquareCheckIcon className="mr-2" />
 							) : (
