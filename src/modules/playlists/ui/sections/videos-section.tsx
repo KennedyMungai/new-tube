@@ -13,6 +13,7 @@ import {
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { toast } from "sonner";
 
 type Props = {
 	playlistId: string;
@@ -46,6 +47,8 @@ const VideosSectionSkeleton = () => {
 };
 
 const VideosSectionSuspense = ({ playlistId }: Props) => {
+	const utils = trpc.useUtils();
+
 	const [videos, query] = trpc.playlists.getVideos.useSuspenseInfiniteQuery(
 		{
 			limit: DEFAULT_LIMIT,
@@ -56,20 +59,44 @@ const VideosSectionSuspense = ({ playlistId }: Props) => {
 		},
 	);
 
+	const removeVideo = trpc.playlists.removeVideo.useMutation({
+		onSuccess: (data) => {
+			toast.success("Video removed from playlist");
+
+			utils.playlists.getMany.invalidate();
+			utils.playlists.getManyForVideo.invalidate({ videoId: data.videoId });
+			utils.playlists.getOne.invalidate({ playlistId: data.playlistId });
+			utils.playlists.getVideos.invalidate({ playlistId: data.playlistId });
+		},
+		onError: () => toast.error("Something went wrong"),
+	});
+
 	return (
 		<div>
 			<div className="flex flex-col gap-4 gap-y-10 md:hidden">
 				{videos.pages
 					.flatMap((page) => page.items)
 					.map((video) => (
-						<VideoGridCard key={video.id} data={video} />
+						<VideoGridCard
+							key={video.id}
+							data={video}
+							onRemove={() =>
+								removeVideo.mutate({ playlistId, videoId: video.id })
+							}
+						/>
 					))}
 			</div>
 			<div className="md:flex flex-col gap-4 hidden">
 				{videos.pages
 					.flatMap((page) => page.items)
 					.map((video) => (
-						<VideoRowCard key={video.id} data={video} />
+						<VideoRowCard
+							key={video.id}
+							data={video}
+							onRemove={() =>
+								removeVideo.mutate({ playlistId, videoId: video.id })
+							}
+						/>
 					))}
 			</div>
 			<InfiniteScroll
