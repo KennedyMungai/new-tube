@@ -9,7 +9,16 @@ import {
 } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { and, desc, eq, exists, getTableColumns, lt, or } from "drizzle-orm";
+import {
+	and,
+	desc,
+	eq,
+	exists,
+	getTableColumns,
+	lt,
+	or,
+	sql,
+} from "drizzle-orm";
 import { z } from "zod";
 
 export const playlistsRouter = createTRPCRouter({
@@ -225,6 +234,14 @@ export const playlistsRouter = createTRPCRouter({
 						eq(playlistVideos.playlistId, playlists.id),
 					),
 					user: users,
+					thumbnailUrl: sql<string | null>`(
+						SELECT v.thumbnail_url
+						FROM ${playlistVideos} pv
+						JOIN ${videos} v ON pv.video_id = v.id
+						WHERE pv.playlist_id = ${playlists.id}
+						ORDERBY pv.updated_at DESC
+						LIMIT 1
+					)`,
 				})
 				.from(playlists)
 				.innerJoin(users, eq(playlists.userId, users.id))
