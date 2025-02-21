@@ -25,23 +25,26 @@ const formSchema = z.object({
 });
 
 export const PlaylistCreateModal = ({ onOpenChange, open }: Props) => {
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
-		defaultValues: {
-			name: "",
-		},
-	});
+    const utils = trpc.useUtils();
 
-	const create = trpc.playlists.create.useMutation({
-		onSuccess: () => {
-			toast.success("Playlist created", {
-				description: "Check your playlists",
-			});
-			form.reset();
-			onOpenChange(false);
-		},
-		onError: () => toast.error("Something went wrong"),
-	});
+		const form = useForm<z.infer<typeof formSchema>>({
+			resolver: zodResolver(formSchema),
+			defaultValues: {
+				name: "",
+			},
+		});
+
+		const create = trpc.playlists.create.useMutation({
+			onSuccess: () => {
+				toast.success("Playlist created", {
+					description: "Check your playlists",
+				});
+				form.reset();
+				onOpenChange(false);
+				utils.playlists.getMany.invalidate();
+			},
+			onError: () => toast.error("Something went wrong"),
+		});
 
 	const onSubmit = async ({ name }: z.infer<typeof formSchema>) => {
 		await create.mutateAsync({
