@@ -71,6 +71,7 @@ export const PlaylistAddModal = ({ onOpenChange, open, videoId }: Props) => {
 						hasNextPage={hasNextPage}
 						isFetchingNextPage={isFetchingNextPage}
 						fetchNextPage={fetchNextPage}
+						isManual
 					/>
 				)}
 			</div>
