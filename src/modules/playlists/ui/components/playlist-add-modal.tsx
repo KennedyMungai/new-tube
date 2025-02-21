@@ -46,6 +46,18 @@ export const PlaylistAddModal = ({ onOpenChange, open, videoId }: Props) => {
 		onError: () => toast.error("Something went wrong"),
 	});
 
+	const removeVideo = trpc.playlists.removeVideo.useMutation({
+		onSuccess: (data) => {
+			toast.success("Video removed from playlist");
+
+			utils.playlists.getMany.invalidate();
+			utils.playlists.getManyForVideo.invalidate({ videoId });
+
+			// TODO: Invalidate playlists.getOne
+		},
+		onError: () => toast.error("Something went wrong"),
+	});
+
 	const handleOpenChange = () => {
 		utils.playlists.getManyForVideo.reset();
 
