@@ -56,7 +56,7 @@ export const VideoMenu = ({ videoId, onRemove, variant = "ghost" }: Props) => {
 					)}
 				</DropdownMenuContent>
 			</DropdownMenu>
-			<PlaylistAddModal open={isOpen} onOpenChange={setIsOpen} />
+			<PlaylistAddModal open={isOpen} onOpenChange={setIsOpen} videoId={videoId} />
 		</>
 	);
 };
