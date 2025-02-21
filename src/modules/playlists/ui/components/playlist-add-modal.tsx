@@ -89,6 +89,7 @@ export const PlaylistAddModal = ({ onOpenChange, open, videoId }: Props) => {
 									addVideo.mutate({ playlistId: playlist.id, videoId });
 								}
 							}}
+							disabled={removeVideo.isPending || addVideo.isPending}
 							className="w-full justify-start px-2 [&_svg]:size-5">
 							{playlist.containsVideo ? (
 								<SquareCheckIcon className="mr-2" />
