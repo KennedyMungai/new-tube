@@ -2,6 +2,7 @@ import { DEFAULT_LIMIT } from "@/constants";
 import { HomeView } from "@/modules/home/ui/views/home-view";
 import { HydrateClient, trpc } from "@/trpc/server";
 
+// This helps with the prefetching
 export const dynamic = "force-dynamic";
 
 type Props = {

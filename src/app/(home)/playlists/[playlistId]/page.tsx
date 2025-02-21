@@ -15,7 +15,11 @@ const PlaylistPage = async ({ params }: Props) => {
 		limit: DEFAULT_LIMIT,
 	});
 
-	return <HydrateClient>PlaylistPage</HydrateClient>;
+	return (
+		<HydrateClient>
+			<PlaylistsView />
+		</HydrateClient>
+	);
 };
 
 export default PlaylistPage;
