@@ -47,7 +47,7 @@ const PlaylistsSectionSuspense = () => {
 
 	return (
 		<>
-			<div className="flex flex-col gap-4 gap-y-10 md:hidden">
+			<div className="md:flex flex-col gap-4 gap-y-10 hidden">
 				{JSON.stringify(playlists)}
 			</div>
 			<InfiniteScroll
