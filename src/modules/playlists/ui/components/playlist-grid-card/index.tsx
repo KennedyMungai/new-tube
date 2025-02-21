@@ -1,4 +1,5 @@
 import { PlaylistGetManyOutput } from "@/modules/playlists/types";
+import { PlaylistInfo } from "@/modules/playlists/ui/components/playlist-grid-card/playlist-info";
 import { PlaylistsThumbnail } from "@/modules/playlists/ui/components/playlist-grid-card/playlists-thumbnail";
 import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
 import Link from "next/link";
@@ -16,6 +17,7 @@ export const PlaylistGridCard = ({ data }: Props) => {
 					title={data.name}
 					videoCount={data.playlistVideoCount}
 				/>
+				<PlaylistInfo data={data} />
 			</div>
 		</Link>
 	);
