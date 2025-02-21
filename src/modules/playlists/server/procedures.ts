@@ -239,7 +239,7 @@ export const playlistsRouter = createTRPCRouter({
 						FROM ${playlistVideos} pv
 						JOIN ${videos} v ON pv.video_id = v.id
 						WHERE pv.playlist_id = ${playlists.id}
-						ORDERBY pv.updated_at DESC
+						ORDER BY pv.updated_at DESC
 						LIMIT 1
 					)`,
 				})
