@@ -621,4 +621,23 @@ export const playlistsRouter = createTRPCRouter({
 
 			return { items, nextCursor };
 		}),
+	getOne: protectedProcedure
+		.input(z.object({ playlistId: z.string().uuid() }))
+		.query(async ({ ctx, input }) => {
+			const { playlistId } = input;
+			const { id: userId } = ctx.user;
+
+			const [existingPlaylist] = await db
+				.select()
+				.from(playlists)
+				.where(and(eq(playlists.id, playlistId), eq(playlists.userId, userId)));
+
+			if (!existingPlaylist)
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Playlist not found",
+				});
+
+			return existingPlaylist;
+		}),
 });
