@@ -49,14 +49,18 @@ export const VideoMenu = ({ videoId, onRemove, variant = "ghost" }: Props) => {
 						Add to playlist
 					</DropdownMenuItem>
 					{onRemove && (
-						<DropdownMenuItem onClick={() => {}}>
+						<DropdownMenuItem onClick={onRemove}>
 							<Trash2Icon className="mr-2 size-4" />
 							Remove
 						</DropdownMenuItem>
 					)}
 				</DropdownMenuContent>
 			</DropdownMenu>
-			<PlaylistAddModal open={isOpen} onOpenChange={setIsOpen} videoId={videoId} />
+			<PlaylistAddModal
+				open={isOpen}
+				onOpenChange={setIsOpen}
+				videoId={videoId}
+			/>
 		</>
 	);
 };
