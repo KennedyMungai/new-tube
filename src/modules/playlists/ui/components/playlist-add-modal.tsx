@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { DEFAULT_LIMIT } from "@/constants";
 import { trpc } from "@/trpc/client";
 import { Loader2Icon, SquareCheckIcon, SquareIcon } from "lucide-react";
+import { toast } from "sonner";
 
 type Props = {
 	open: boolean;
@@ -32,6 +33,18 @@ export const PlaylistAddModal = ({ onOpenChange, open, videoId }: Props) => {
 			enabled: !!videoId && open,
 		},
 	);
+
+	const addVideo = trpc.playlists.addVideo.useMutation({
+		onSuccess: (data) => {
+			toast.success("Video added to playlist");
+
+			utils.playlists.getMany.invalidate();
+			utils.playlists.getManyForVideo.invalidate({ videoId });
+
+			// TODO: Invalidate playlists.getOne
+		},
+		onError: () => toast.error("Something went wrong"),
+	});
 
 	const handleOpenChange = () => {
 		utils.playlists.getManyForVideo.reset();
