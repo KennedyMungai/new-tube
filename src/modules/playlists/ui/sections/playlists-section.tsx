@@ -2,6 +2,7 @@
 
 import { InfiniteScroll } from "@/components/infinite-scroll";
 import { DEFAULT_LIMIT } from "@/constants";
+import { PlaylistGridCard } from "@/modules/playlists/ui/components/playlist-grid-card";
 import { VideoGridCardSkeleton } from "@/modules/videos/ui/components/video-grid-card";
 import { VideoRowCardSkeleton } from "@/modules/videos/ui/components/video-row-card";
 import { trpc } from "@/trpc/client";
@@ -48,7 +49,11 @@ const PlaylistsSectionSuspense = () => {
 	return (
 		<>
 			<div className="md:flex flex-col gap-4 gap-y-10 hidden">
-				{JSON.stringify(playlists)}
+				{playlists.pages
+					.flatMap((page) => page.items)
+					.map((playlist) => (
+						<PlaylistGridCard key={playlist.id} data={playlist} />
+					))}
 			</div>
 			<InfiniteScroll
 				hasNextPage={query.hasNextPage}
