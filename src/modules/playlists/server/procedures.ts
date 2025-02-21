@@ -9,7 +9,7 @@ import {
 } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { and, desc, eq, getTableColumns, lt, or } from "drizzle-orm";
+import { and, desc, eq, getTableColumns, lt, or, sql } from "drizzle-orm";
 import { z } from "zod";
 
 export const playlistsRouter = createTRPCRouter({
@@ -225,6 +225,67 @@ export const playlistsRouter = createTRPCRouter({
 						eq(playlistVideos.playlistId, playlists.id),
 					),
 					user: users,
+				})
+				.from(playlists)
+				.innerJoin(users, eq(playlists.userId, users.id))
+				.where(
+					and(
+						eq(playlists.userId, userId),
+						cursor
+							? or(
+									lt(playlists.updatedAt, cursor.updatedAt),
+									and(
+										eq(playlists.updatedAt, cursor.updatedAt),
+										lt(playlists.id, cursor.id),
+									),
+								)
+							: undefined,
+					),
+				)
+				.orderBy(desc(playlists.updatedAt), desc(playlists.id))
+				.limit(limit + 1);
+
+			const hasMore = data.length > limit;
+
+			// Remove the last item if there is more
+			const items = hasMore ? data.slice(0, -1) : data;
+
+			// Set the next cursor to the last item if there is more data
+			const lastItem = items[items.length - 1];
+			const nextCursor = hasMore
+				? { id: lastItem.id, updatedAt: lastItem.updatedAt }
+				: null;
+
+			return { items, nextCursor };
+		}),
+	getManyForVideo: protectedProcedure
+		.input(
+			z.object({
+				videoId: z.string().uuid(),
+				cursor: z
+					.object({
+						id: z.string().uuid(),
+						updatedAt: z.date(),
+					})
+					.nullish(),
+				limit: z.number().min(1).max(100),
+			}),
+		)
+		.query(async ({ input, ctx }) => {
+			const { limit, cursor, videoId } = input;
+			const { id: userId } = ctx.user;
+
+			const data = await db
+				.select({
+					...getTableColumns(playlists),
+					playlistVideoCount: db.$count(
+						playlistVideos,
+						eq(playlistVideos.playlistId, playlists.id),
+					),
+					user: users,
+					containsVideo: videoId
+						? sql<boolean>`SELECT EXISTS (SELECT 1 FROM ${playlistVideos} WHERE ${playlistVideos.playlistId} = ${playlists.id} AND ${playlistVideos.videoId} = ${videoId})`
+						: sql<boolean>`false`,
 				})
 				.from(playlists)
 				.innerJoin(users, eq(playlists.userId, users.id))
