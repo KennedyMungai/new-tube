@@ -646,16 +646,22 @@ export const playlistsRouter = createTRPCRouter({
 			const { playlistId } = input;
 			const { id: userId } = ctx.user;
 
+			const [existingPlaylist] = await db
+				.select()
+				.from(playlists)
+				.where(and(eq(playlists.id, playlistId), eq(playlists.userId, userId)));
+
+			if (!existingPlaylist)
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: "Playlist not found",
+				});
+
 			const [removedPlaylist] = await db
 				.delete(playlists)
 				.where(and(eq(playlists.id, playlistId), eq(playlists.userId, userId)))
 				.returning();
 
-			if (!removedPlaylist)
-				throw new TRPCError({
-					code: "NOT_FOUND",
-					message: "Playlist not found",
-				});
 
 			return removedPlaylist;
 		}),
