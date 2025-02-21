@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { ListVideoIcon, PlayIcon } from "lucide-react";
 import Image from "next/image";
+import { useMemo } from "react";
 
 type Props = {
 	imageUrl?: string;
@@ -15,6 +16,11 @@ export const PlaylistsThumbnail = ({
 	videoCount,
 	className,
 }: Props) => {
+	const compactVideoCount = useMemo(
+		() => Intl.NumberFormat("en-US").format(videoCount),
+		[videoCount],
+	);
+
 	return (
 		<div className={cn("relative pt-3", className)}>
 			{/* Stack Effect Layers */}
@@ -52,7 +58,7 @@ export const PlaylistsThumbnail = ({
 			{/* Video Count Indicator */}
 			<div className="absolute bottom-2 right-2 px-1 py-0.5 rounded bg-black/80 text-white text-xs font-medium flex items-center gap-x-1">
 				<ListVideoIcon className="size-4" />
-				<span>{videoCount} videos</span>
+				<span>{compactVideoCount} videos</span>
 			</div>
 		</div>
 	);
