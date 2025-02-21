@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { ListVideoIcon, PlayIcon } from "lucide-react";
 import Image from "next/image";
 
 type Props = {
@@ -40,8 +41,18 @@ export const PlaylistsThumbnail = ({
 						unoptimized={!!imageUrl}
 					/>
 					{/* Hover Overlay */}
-					<div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100"></div>
+					<div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center duration-150">
+						<div className="flex items-center gap-x-2">
+							<PlayIcon className="size-5 text-white fill-white" />
+							<span className="text-white font-medium">Play All</span>
+						</div>
+					</div>
 				</div>
+			</div>
+			{/* Video Count Indicator */}
+			<div className="absolute bottom-2 right-2 px-1 py-0.5 rounded bg-black/80 text-white text-xs font-medium flex items-center gap-x-1">
+				<ListVideoIcon className="size-4" />
+				<span>{videoCount} videos</span>
 			</div>
 		</div>
 	);
