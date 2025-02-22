@@ -1,5 +1,6 @@
 "use client";
 
+import { Separator } from "@/components/ui/separator";
 import {
 	UserPageBanner,
 	UserPageBannerSkeleton,
@@ -31,6 +32,7 @@ const UserSectionSkeleton = () => {
 		<div className="flex flex-col">
 			<UserPageBannerSkeleton />
 			<UserPageInfoSkeleton />
+			<Separator />
 		</div>
 	);
 };
@@ -42,6 +44,7 @@ const UserSectionSuspense = ({ userId }: Props) => {
 		<div className="flex flex-col">
 			<UserPageBanner user={user} />
 			<UserPageInfo user={user} />
+			<Separator />
 		</div>
 	);
 };
