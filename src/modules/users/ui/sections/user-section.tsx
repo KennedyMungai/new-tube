@@ -1,5 +1,6 @@
 "use client";
 
+import { UserPageBanner } from "@/modules/users/ui/components/user-page-banner";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -19,7 +20,11 @@ export const UserSection = ({ userId }: Props) => {
 };
 
 const UserSectionSuspense = ({ userId }: Props) => {
-	const [data] = trpc.users.getOne.useSuspenseQuery({ id: userId });
+	const [user] = trpc.users.getOne.useSuspenseQuery({ id: userId });
 
-	return <p>{JSON.stringify(data)}</p>;
+	return (
+		<div className="flex flex-col">
+			<UserPageBanner user={user} />
+		</div>
+	);
 };
