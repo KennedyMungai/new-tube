@@ -14,7 +14,6 @@ export const BannerUploadModal = ({ onOpenChange, open, userId }: Props) => {
 	const onUploadComplete = () => {
 		onOpenChange(false);
 		utils.users.getOne.invalidate({ id: userId });
-		utils.studio.getMany.invalidate();
 	};
 
 	return (
