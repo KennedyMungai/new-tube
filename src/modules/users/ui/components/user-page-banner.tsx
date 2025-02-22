@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { UsersGetOneOutput } from "@/modules/users/types";
 import { useAuth } from "@clerk/nextjs";
@@ -32,4 +33,8 @@ export const UserPageBanner = ({ user }: Props) => {
 			</div>
 		</div>
 	);
+};
+
+export const UserPageBannerSkeleton = () => {
+	return <Skeleton className="w-full max-h-[200px] h-[15vh] md:h-[25vh]" />;
 };
