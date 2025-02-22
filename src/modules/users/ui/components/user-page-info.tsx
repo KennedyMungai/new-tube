@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { UserAvatar } from "@/components/user-avatar";
 import { cn } from "@/lib/utils";
 import { useSubscription } from "@/modules/subscriptions/hooks/use-subscription";
@@ -100,6 +101,34 @@ export const UserPageInfo = ({ user }: Props) => {
 							className="mt-3"
 						/>
 					)}
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export const UserPageInfoSkeleton = () => {
+	return (
+		<div className="py-6">
+			{/* Mobile Layout */}
+			<div className="flex flex-col md:hidden">
+				<div className="flex items-center gap-6">
+					<Skeleton className="size-[60px] rounded-full" />
+					<div className="flex-1 min-w-0">
+						<Skeleton className="h-6 w-32" />
+						<Skeleton className="h-4 w-48 mt-1" />
+					</div>
+				</div>
+				<Skeleton className="h-10 w-full mt-3 rounded-full" />
+			</div>
+
+			{/* Desktop Layout */}
+			<div className="hidden md:flex items-start gap-4">
+				<Skeleton className="size-[160px] rounded-full" />
+				<div className="flex-1 min-w-0">
+					<Skeleton className="h-8 w-64" />
+					<Skeleton className="h-5 w-48 mt-4" />
+					<Skeleton className="h-10 w-32 mt-3 rounded-full" />
 				</div>
 			</div>
 		</div>

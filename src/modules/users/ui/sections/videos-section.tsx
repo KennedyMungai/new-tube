@@ -11,22 +11,22 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 type Props = {
-	categoryId?: string;
+	userId: string;
 };
 
-export const HomeVideosSection = ({ categoryId }: Props) => {
+export const VideosSection = ({ userId }: Props) => {
 	return (
-		<Suspense key={categoryId} fallback={<HomeVideosSectionSkeleton />}>
+		<Suspense fallback={<VideosSectionSkeleton />}>
 			<ErrorBoundary fallback={<p>Error</p>}>
-				<HomeVideosSectionSuspense categoryId={categoryId} />
+				<VideosSectionSuspense userId={userId} />
 			</ErrorBoundary>
 		</Suspense>
 	);
 };
 
-const HomeVideosSectionSkeleton = () => {
+const VideosSectionSkeleton = () => {
 	return (
-		<div className="gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 [@media(min-width:1920px)]:grid-cols-5 [@media(min-width:2200px)]:grid-cols-6">
+		<div className="gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
 			{Array.from({ length: 12 }).map((_, index) => (
 				<VideoGridCardSkeleton key={index} />
 			))}
@@ -34,10 +34,10 @@ const HomeVideosSectionSkeleton = () => {
 	);
 };
 
-const HomeVideosSectionSuspense = ({ categoryId }: Props) => {
+const VideosSectionSuspense = ({ userId }: Props) => {
 	const [videos, query] = trpc.videos.getMany.useSuspenseInfiniteQuery(
 		{
-			categoryId,
+			userId,
 			limit: DEFAULT_LIMIT,
 		},
 		{
@@ -47,7 +47,7 @@ const HomeVideosSectionSuspense = ({ categoryId }: Props) => {
 
 	return (
 		<div>
-			<div className="gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 [@media(min-width:1920px)]:grid-cols-5 [@media(min-width:2200px)]:grid-cols-6">
+			<div className="gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 [@media(min-width:1920px)]:grid-cols-4 [@media(min-width:2200px)]:grid-cols-4">
 				{videos.pages
 					.flatMap((page) => page.items)
 					.map((video) => (
