@@ -1,6 +1,7 @@
 "use client";
 
 import { UserPageBanner } from "@/modules/users/ui/components/user-page-banner";
+import { UserPageInfo } from "@/modules/users/ui/components/user-page-info";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -25,6 +26,7 @@ const UserSectionSuspense = ({ userId }: Props) => {
 	return (
 		<div className="flex flex-col">
 			<UserPageBanner user={user} />
+			<UserPageInfo user={user} />
 		</div>
 	);
 };
