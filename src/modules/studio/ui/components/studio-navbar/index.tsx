@@ -1,6 +1,5 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { AuthButton } from "@/modules/auth/ui/components/auth-button";
-import { SearchInput } from "@/modules/studio/ui/components/studio-navbar/search-input";
 import { StudioUploadModal } from "@/modules/studio/ui/components/studio-upload-modal";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,11 +18,6 @@ export const StudioNavbar = () => {
 						</div>
 					</Link>
 				</div>
-
-				{/* Search Bar */}
-				{/* <div className="flex-1 flex justify-center max-w-[700px] mx-auto">
-					<SearchInput />
-				</div> */}
 			</div>
 			{/* Spacer */}
 			<div className="flex-1" />
