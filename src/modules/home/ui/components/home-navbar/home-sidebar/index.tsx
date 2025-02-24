@@ -2,6 +2,8 @@ import { Separator } from "@/components/ui/separator";
 import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
 import { MainItems } from "@/modules/home/ui/components/home-navbar/home-sidebar/main-items";
 import { PersonalItems } from "@/modules/home/ui/components/home-navbar/home-sidebar/personal-items";
+import { SubscriptionsItems } from "@/modules/home/ui/components/home-navbar/home-sidebar/subscriptions-items";
+import { SignedIn } from "@clerk/nextjs";
 
 export const HomeSidebar = () => {
 	return (
@@ -10,6 +12,12 @@ export const HomeSidebar = () => {
 				<MainItems />
 				<Separator />
 				<PersonalItems />
+				<SignedIn>
+					<>
+						<Separator />
+						<SubscriptionsItems />
+					</>
+				</SignedIn>
 			</SidebarContent>
 		</Sidebar>
 	);
