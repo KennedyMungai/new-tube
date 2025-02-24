@@ -120,6 +120,7 @@ const VideosSectionSuspense = () => {
 							.map((video) => (
 								// HACK: The legacy behavior prop solves the hydration error
 								<Link
+									prefetch
 									href={`/studio/videos/${video.id}`}
 									key={video.id}
 									legacyBehavior>
