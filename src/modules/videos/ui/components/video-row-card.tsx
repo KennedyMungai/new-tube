@@ -46,7 +46,6 @@ interface Props extends VariantProps<typeof videoRowCardVariants> {
 	onRemove?: () => void;
 }
 
-// TODO: Render a proper skeleton
 export const VideoRowCardSkeleton = ({
 	size = "default",
 }: VariantProps<typeof videoRowCardVariants>) => {
