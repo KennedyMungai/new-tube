@@ -44,7 +44,7 @@ const items: {
 	},
 ];
 
-export const PersonalSection = () => {
+export const PersonalItems = () => {
 	const clerk = useClerk();
 	const { isSignedIn } = useAuth();
 	const pathname = usePathname();
