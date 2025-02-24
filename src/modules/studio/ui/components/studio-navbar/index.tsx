@@ -12,7 +12,7 @@ export const StudioNavbar = () => {
 				{/* Menu and logo */}
 				<div className="flex items-center flex-shrink-0">
 					<SidebarTrigger />
-					<Link href="/studio">
+					<Link href="/studio" className="hidden md:block">
 						<div className="p-4 flex items-center gap-1">
 							<Image src="/logo.svg" alt="logo" width={32} height={32} />
 							<p className="text-xl font-semibold tracking-tight">Studio</p>
@@ -21,9 +21,9 @@ export const StudioNavbar = () => {
 				</div>
 
 				{/* Search Bar */}
-				<div className="flex-1 flex justify-center max-w-[700px] mx-auto">
+				{/* <div className="flex-1 flex justify-center max-w-[700px] mx-auto">
 					<SearchInput />
-				</div>
+				</div> */}
 			</div>
 			{/* Spacer */}
 			<div className="flex-1" />
